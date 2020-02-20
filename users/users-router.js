@@ -4,7 +4,7 @@ const express = require("express");
 const jwt = require('jsonwebtoken');
 const authenticate = require('../auth/authenticate-middleware');
 const router = express.Router();
-
+const passport = require('passport');
 
 const Users = require('./users-model');
 
@@ -44,6 +44,17 @@ router.post('/login', (req, res) => {
         res.status(500).json({ errorMessage: 'Failed to retrieve credentials '});
     })
 });
+
+// router.get("/login/google", passport.authenticate("google", {
+//     scope: ['profile']
+// }));
+
+// router.get("/login/google/redirect", passport.authenticate("google"), (req, res) => {
+//     const token = generateToken(req.user);
+
+//     res.redirect(`localhost:5000/callback?jwt=${token}&user=${JSON.stringify(req.user)}`);
+
+// })
 
 // GET specific User's recommendations /api/users/:id/recommendations
 router.get('/:id/recommendations', authenticate, (req, res) => {
