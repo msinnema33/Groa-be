@@ -4,7 +4,6 @@ const express = require("express");
 const jwt = require('jsonwebtoken');
 const authenticate = require('../auth/authenticate-middleware');
 const router = express.Router();
-const passport = require('passport');
 
 const Users = require('./users-model');
 
@@ -14,7 +13,7 @@ router.post('/register', (req, res) => {
     const hash = bcrypt.hashSync(userData.password, 8);
     userData.password = hash;
     console.log(userData);
-    Chefs.add(userData)
+    Users.add(userData)
     .then(user => {
         res.status(201).json(user);
     })
