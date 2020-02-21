@@ -4,8 +4,9 @@
   "description": "Lambda Labs Groa",
   "main": "index.js",
   "scripts": {
-    "test": "standard",
-    "start": "nodemon ."
+    "test": "cross-env DB_ENV=testing jest --watch --verbose --runInBand --collect-coverage",
+    "start": "node index.js",
+    "server": "nodemon ."
   },
   "repository": {
     "type": "git",
