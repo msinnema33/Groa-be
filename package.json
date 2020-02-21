@@ -8,6 +8,9 @@
     "start": "node index.js",
     "server": "nodemon ."
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lambda-School-Labs/Groa-be.git"
