@@ -2,11 +2,16 @@
   "name": "groa-be",
   "version": "1.0.0",
   "description": "Lambda Labs Groa",
+  "apidoc": {
+    "title": "Groa Web API Documentation",
+    "url": "to be determined"
+  },
   "main": "index.js",
   "scripts": {
     "test": "cross-env DB_ENV=testing jest --watch --verbose --runInBand --collect-coverage",
     "start": "node index.js",
-    "server": "nodemon ."
+    "server": "nodemon .",
+    "docs": "apidoc -i . -e node_modules coverage database migrations seeds -o ./docs"
   },
   "jest": {
     "testEnvironment": "node"
@@ -22,6 +27,7 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/Groa-be#readme",
   "dependencies": {
+    "apidoc": "^0.20.0",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -32,11 +38,8 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.8",
     "knex-cleaner": "^1.3.0",
-    "node-fetch": "^2.6.0",
     "pg": "^7.18.1",
     "pg-format": "^1.0.4",
-    "secret": "^1.0.2",
-    "sequelize": "^5.21.4",
     "standard": "^14.3.1"
   },
   "devDependencies": {
