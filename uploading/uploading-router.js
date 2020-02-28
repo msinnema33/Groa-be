@@ -54,7 +54,7 @@ router.post("/:user_id/uploading", (req, res) => {
               date: new Date(data.Date + "Z"),
               name: data.Name,
               year: Number(data.Year),
-              rating: parseFloat(data.Rating),
+              rating: data.rating === null ? null : Number(data.rating),
               user_id: Number(req.params.user_id)
             };
             // seperating files

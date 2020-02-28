@@ -3,9 +3,8 @@ const db = require("../../../database/dbConfig.js");
 module.exports = { addRating };
 
 async function addRating(rating) {
-  let rated = await db("user_letterboxd_ratings").insert(rating);
-  console.log("RATED: ", rated);
+  let [id] = await db("user_letterboxd_ratings").insert(rating, "id");
   return db("user_letterboxd_ratings")
-    .where({ name: rating.name })
+    .where({ id })
     .first();
 }

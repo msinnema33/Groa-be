@@ -19,11 +19,15 @@ const review1 = {
   tags: "",
   watched_date: ""
 };
+
+const review = {
+  rating: null
+};
 const review2 = {
   date: new Date("2012-09-20" + "Z"),
   name: "Singin' in the Rain",
   year: Number("1952"),
-  rating: Number(""),
+  rating: review.rating === null ? null : Number(review.rating),
   user_id: Number(2),
   letterboxd_uri:
     "https://letterboxd.com/tabula_rasta/film/singin-in-the-rain/",
@@ -44,7 +48,7 @@ describe("letterboxd ratings model", () => {
     rating = await addReview(review2);
     expect(rating.name).toBe("Singin' in the Rain");
     expect(rating.year).toBe(1952);
-    expect(rating.rating).toBe("");
+    expect(rating.rating).toBe(null);
 
     let reviews = await db("user_letterboxd_reviews");
     expect(reviews).toHaveLength(2);

@@ -32,7 +32,6 @@ describe("letterboxd ratings model", () => {
     expect(rating.name).toBe("Aladdin");
     expect(rating.year).toBe(1992);
     expect(rating.rating).toBe(4);
-    console.log("RATINGS: RATING: ", rating);
 
     let ratings = await db("user_letterboxd_ratings");
     expect(ratings).toHaveLength(2);

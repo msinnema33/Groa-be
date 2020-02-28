@@ -32,7 +32,7 @@ describe("letterboxd watched model", () => {
     expect(watched.year).toBe(2012);
 
     let watchedMovies = await db("user_letterboxd_watched");
-    expect(watchedMovies).toHaveLength(4);
+    expect(watchedMovies).toHaveLength(2);
   });
 
   // will continue to add tests and model functions if more functionality is needed.
