@@ -37,10 +37,9 @@ const review2 = {
 describe("letterboxd ratings model", () => {
   it("should insert the provided rating into the db", async () => {
     let rating = await addReview(review1);
-    // expect(rating.name).toBe("Reservoir Dogs");
+    expect(rating.name).toBe("Reservoir Dogs");
     expect(rating.year).toBe(1992);
-    expect(rating.rating).toBe(5);
-    console.log("TEST: RATING: ", rating);
+    expect(rating.rating).toBe(3.5);
 
     rating = await addReview(review2);
     expect(rating.name).toBe("Singin' in the Rain");

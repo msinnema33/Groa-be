@@ -1,7 +1,17 @@
-const { UploadingRouter } = require("../api/server.js");
+const router = require("express").Router();
 const fs = require("fs"); // used to create Read and Write streams
 const csv = require("csv-parser"); // used for parsing CSV files to JSON
-var unzipper = require("unzipper"); // extracting files from a .zip
+const unzipper = require("unzipper"); // extracting files from a .zip
+const fileUpload = require("express-fileupload"); // creating a temp path for files
+
+router.use(
+  fileUpload({
+    parseNested: true,
+    useTempFiles: true,
+    tempFileDir: "/node_modules/",
+    cleanup: true
+  })
+);
 
 // model functions
 const { addRating } = require("./models/letterboxd_tables/ratings.js");
@@ -9,17 +19,8 @@ const { addReview } = require("./models/letterboxd_tables/reviews.js");
 const { addToWatched } = require("./models/letterboxd_tables/watched.js");
 const { addToWatchList } = require("./models/letterboxd_tables/watch_list.js");
 
-// updating naming convention
-const router = UploadingRouter;
-
-router.post("/:id/upload", (req, res) => {
+router.post("/:user_id/uploading", (req, res) => {
   const tempFilePath = req.files.movies.tempFilePath;
-
-  // creating homes for parsed data --> won't need on insert to db
-  let ratingsData = []; // used in map function
-  let reviewsData = [];
-  let watchedData = [];
-  let watchListData = [];
 
   //https://www.npmjs.com/package/unzipper for docs on how to do this.
   fs.createReadStream(tempFilePath)
@@ -39,7 +40,7 @@ router.post("/:id/upload", (req, res) => {
       function createTempFilePath(path, name) {
         entry.pipe(fs.createWriteStream(path + "-" + name));
         entry
-          // parsing csv -> json and pushing into arrays to temp store
+          // parsing csv -> json to insert
           .pipe(csv())
           // takes data from csv files to structure them into the correct format and types for db
           .on("data", function(data) {
@@ -49,16 +50,13 @@ router.post("/:id/upload", (req, res) => {
               name: data.Name,
               year: Number(data.Year),
               rating: parseFloat(data.Rating),
-              user_id: Number(req.params.id)
+              user_id: Number(req.params.user_id)
             };
             // seperating files
             switch (name) {
               case "ratings.csv":
                 parsed = { ...parsed };
-                ratingsData.push(parsed);
-                addRating(parsed)
-                  .then(() => null)
-                  .catch(err => console.log("rating error: ", err));
+                addRating(parsed);
                 break;
               case "reviews.csv":
                 // may have to update rating data type based on Niki's response
@@ -71,10 +69,6 @@ router.post("/:id/upload", (req, res) => {
                   tags: data.Tags,
                   watched_date: data["Watched Date"]
                 };
-                reviewsData
-                  .push(parsed)
-                  .then(() => null)
-                  .catch(err => console.log("reviews error: ", err));
                 addReview(parsed);
                 break;
               case "watched.csv":
@@ -83,12 +77,9 @@ router.post("/:id/upload", (req, res) => {
                   name: data.Name,
                   year: Number(data.Year),
                   letterboxd_uri: data["Letterboxd URI"],
-                  user_id: Number(req.params.id)
+                  user_id: Number(req.params.user_id)
                 };
-                watchedData.push(parsed);
-                addToWatched(parsed)
-                  .then(() => null)
-                  .catch(err => console.log("watched error: ", err));
+                addToWatched(parsed);
                 break;
               case "watchlist.csv":
                 parsed = {
@@ -96,12 +87,9 @@ router.post("/:id/upload", (req, res) => {
                   name: data.Name,
                   year: Number(data.Year),
                   letterboxd_uri: data["Letterboxd URI"],
-                  user_id: Number(req.params.id)
+                  user_id: Number(req.params.user_id)
                 };
-                watchListData.push(parsed);
-                addToWatchList(parsed)
-                  .then(() => null)
-                  .catch(err => console.log("watchList error: ", err));
+                addToWatchList(parsed);
                 break;
               default:
                 let err = new Error(
@@ -109,9 +97,8 @@ router.post("/:id/upload", (req, res) => {
                 );
                 res.status(400).json({ err });
             }
-          }); // have an on 'end' here to insert into tables?
+          });
       }
-      console.log(reviewsData);
 
       // fancy if statement to run different functions based on file name.
       switch (fileName) {
@@ -132,3 +119,5 @@ router.post("/:id/upload", (req, res) => {
       }
     });
 });
+
+module.exports = router;
