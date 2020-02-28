@@ -28,6 +28,11 @@ router.post("/:user_id/uploading", (req, res) => {
     .on("entry", function(entry) {
       const fileName = entry.path;
 
+      /**
+       * Cleans up a string with \r and \n in it.
+       * @param {string} string - any string that you want to remove the `\n` characters from.
+       * @returns {string}
+       */
       function removeNewLines(string) {
         return string.replace(/\r?\n|\r/g, "");
       }

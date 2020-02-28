@@ -22,7 +22,8 @@ module.exports = {
     ...dbObj
   },
   testing: {
-    ...dbObj
+    ...dbObj,
+    connection: process.env.TESTING_DB_URL
   },
   production: {
     ...dbObj
