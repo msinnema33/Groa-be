@@ -1,38 +1,30 @@
-// Update with your config settings.
+require("dotenv").config();
 
+const dbConnection = process.env.DATABASE_URL;
+
+const dbObj = {
+  client: "pg",
+  connection: dbConnection,
+  migrations: {
+    directory: "./migrations"
+  },
+  seeds: {
+    directory: "./seeds"
+  },
+  pool: {
+    min: 2,
+    max: 10
+  }
+};
+// The different DB environment setups
 module.exports = {
-
   development: {
-    client: 'postgresql',
-    connection: {
-      filename: './dev.pgsql'
-    }
+    ...dbObj
   },
-
-  staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
+  testing: {
+    ...dbObj
   },
-
   production: {
-    client: 'pg',
-    connection: 'process.env.PGDB',
-      migrations: {
-        directory: './database/migrations',
-      },
-      seeds: {
-        directory: './database/seeds'
-      },
-    }
-}
+    ...dbObj
+  }
+};
