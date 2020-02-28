@@ -3,6 +3,12 @@ const fs = require("fs"); // used to create Read and Write streams
 const csv = require("csv-parser"); // used for parsing CSV files to JSON
 var unzipper = require("unzipper"); // extracting files from a .zip
 
+// model functions
+const { addRating } = require("./models/letterboxd_tables/ratings.js");
+const { addReview } = require("./models/letterboxd_tables/reviews.js");
+const { addToWatched } = require("./models/letterboxd_tables/watched.js");
+const { addToWatchList } = require("./models/letterboxd_tables/watch_list.js");
+
 // updating naming convention
 const router = UploadingRouter;
 
@@ -42,7 +48,7 @@ router.post("/:id/upload", (req, res) => {
               date: new Date(data.Date + "Z"),
               name: data.Name,
               year: Number(data.Year),
-              rating: Number(data.Rating),
+              rating: parseFloat(data.Rating),
               user_id: Number(req.params.id)
             };
             // seperating files
@@ -50,6 +56,9 @@ router.post("/:id/upload", (req, res) => {
               case "ratings.csv":
                 parsed = { ...parsed };
                 ratingsData.push(parsed);
+                addRating(parsed)
+                  .then(() => null)
+                  .catch(err => console.log("rating error: ", err));
                 break;
               case "reviews.csv":
                 // may have to update rating data type based on Niki's response
@@ -60,9 +69,13 @@ router.post("/:id/upload", (req, res) => {
                   rewatch: data.Rewatch,
                   review: cleanedReview,
                   tags: data.Tags,
-                  watched_data: data["Watched Date"]
+                  watched_date: data["Watched Date"]
                 };
-                reviewsData.push(parsed);
+                reviewsData
+                  .push(parsed)
+                  .then(() => null)
+                  .catch(err => console.log("reviews error: ", err));
+                addReview(parsed);
                 break;
               case "watched.csv":
                 parsed = {
@@ -73,6 +86,9 @@ router.post("/:id/upload", (req, res) => {
                   user_id: Number(req.params.id)
                 };
                 watchedData.push(parsed);
+                addToWatched(parsed)
+                  .then(() => null)
+                  .catch(err => console.log("watched error: ", err));
                 break;
               case "watchlist.csv":
                 parsed = {
@@ -83,6 +99,9 @@ router.post("/:id/upload", (req, res) => {
                   user_id: Number(req.params.id)
                 };
                 watchListData.push(parsed);
+                addToWatchList(parsed)
+                  .then(() => null)
+                  .catch(err => console.log("watchList error: ", err));
                 break;
               default:
                 let err = new Error(
@@ -90,7 +109,7 @@ router.post("/:id/upload", (req, res) => {
                 );
                 res.status(400).json({ err });
             }
-          });
+          }); // have an on 'end' here to insert into tables?
       }
       console.log(reviewsData);
 
