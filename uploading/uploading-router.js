@@ -106,7 +106,14 @@ router.post("/:user_id/uploading", (req, res) => {
                   .catch(err => console.log(err.message));
                 break;
               case "watchlist.csv":
-                parsed = { ...parsed };
+                parsed = {
+                  id: createId(),
+                  date: new Date(data.Date + "Z"),
+                  name: data.Name,
+                  year: Number(data.Year),
+                  letterboxd_uri: data["Letterboxd URI"],
+                  user_id: Number(req.params.user_id)
+                };
                 addToWatchList(parsed)
                   .then(() => null)
                   .catch(err => console.log(err.message));
