@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
 const authenticate = require("../authenticate-middleware.js");
 const router = express.Router();
 
@@ -55,23 +56,25 @@ router.post("/login", (req, res) => {
 // })
 
 // GET specific User's recommendations /api/users/:id/recommendations
-router.get("/:id/recommendations", authenticate, (req, res) => {
+router.get("/:id/recommendations", (req, res) => {
   const { id } = req.params;
 
-  Users.getUserRecommendations(id)
-    .then(recommendations => {
-      if (recommendations) {
-        res.json(recommendations);
-      } else {
-        res
-          .status(404)
-          .json({ error: "Could not find recommendations with provided ID" });
-      }
-    })
+  // Users.getUserRecommendations(id)
+  //   .then(recommendations => {
+  //     if (recommendations.length > 0) {
+      //   res.json(recommendations);
+      // } else {
+        axios.post("http://ace1034515a4911ea8ecd028f1b5a1bc-1712147317.us-east-1.elb.amazonaws.com/movie-recommender", id, {headers: {"Content-Type":"application/json"}})
+        .then(response => {
+          res.status(200).json(response.data)
+        })
+    //   }
+    // })
     .catch(error => {
       res.status(500).json(error);
     });
 });
+
 
 // ---------- Function for creating and signing token ----------- //
 

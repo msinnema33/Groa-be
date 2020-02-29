@@ -8,7 +8,7 @@ router.use(
   fileUpload({
     parseNested: true,
     useTempFiles: true,
-    tempFileDir: "/node_modules/",
+    tempFileDir: "/tmp/",
     cleanup: true
   })
 );
@@ -27,6 +27,7 @@ router.post("/:user_id/uploading", (req, res) => {
     .pipe(unzipper.Parse())
     .on("entry", function(entry) {
       const fileName = entry.path;
+      console.log(fileName)
 
       /**
        * Cleans up a string with \r and \n in it.
@@ -41,12 +42,12 @@ router.post("/:user_id/uploading", (req, res) => {
        * Creates an random id based on a very large number
        * @returns {integer}
        */
-      function createId() {
-        function getRandom(max) {
-          return Math.floor(Math.random() * Math.floor(max));
-        }
-        return getRandom(2 ^ 53) ^ 13;
-      }
+      // function createId() {
+      //   function getRandom(max) {
+      //     return Math.floor(Math.random() * Math.floor(max));
+      //   }
+      //   return getRandom(2 ^ 53) ^ 13;
+      // }
 
       /**
        * Creates unique temp file path, parses csv to json structure to match db schema.
@@ -62,10 +63,11 @@ router.post("/:user_id/uploading", (req, res) => {
           .on("data", function(data) {
             // updateable variable to make sure data types are correct before inserting into database
             let parsed = {
-              id: createId(),
+              // id: createId(),
               date: new Date(data.Date + "Z"),
               name: data.Name,
               year: Number(data.Year),
+              letterboxd_uri: data["Letterboxd URI"],
               rating: data.Rating !== "" ? data.Rating * 1 : undefined, //
               user_id: Number(req.params.user_id)
             };
@@ -73,6 +75,7 @@ router.post("/:user_id/uploading", (req, res) => {
             switch (name) {
               case "ratings.csv":
                 parsed = { ...parsed };
+                console.log(parsed)
                 addRating(parsed)
                   .then(() => null)
                   .catch(err => console.log(err.message));
@@ -94,7 +97,7 @@ router.post("/:user_id/uploading", (req, res) => {
                 break;
               case "watched.csv":
                 parsed = {
-                  id: createId(),
+                  // id: createId(),
                   date: new Date(data.Date + "Z"),
                   name: data.Name,
                   year: Number(data.Year),
@@ -137,7 +140,7 @@ router.post("/:user_id/uploading", (req, res) => {
         default:
           entry.autodrain();
       }
-    });
+    })
 });
 
 module.exports = router;

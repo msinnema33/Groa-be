@@ -34,12 +34,9 @@ function getUserRecommendations(id) {
   return db("recommendations as r")
     .select(
       "r.user_id",
-      "r.letterboxd_id_uri",
-      "u.username",
-      "u.has_letterboxd",
-      "u.has_imdb",
-      "u.last_login",
-      "u.user_preferences"
+      "r.recommendation_id",
+      "r.recommendation_json",
+      "u.user_name",
     )
     .join("users as u", "r.user_id", "=", "u.id")
     .where("r.user_id", id);
