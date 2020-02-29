@@ -10,7 +10,7 @@ const review1 = {
   date: new Date("2012-09-20" + "Z"),
   name: "Reservoir Dogs",
   year: Number("1992"),
-  rating: Number("3.5"),
+  rating: "3.5" * 1,
   user_id: Number(2),
   letterboxd_uri: "https://letterboxd.com/tabula_rasta/film/reservoir-dogs/",
   rewatch: "",
@@ -27,7 +27,7 @@ const review2 = {
   date: new Date("2012-09-20" + "Z"),
   name: "Singin' in the Rain",
   year: Number("1952"),
-  rating: review.rating === null ? null : Number(review.rating),
+  rating: review.rating === null ? null : review.rating * 1,
   user_id: Number(2),
   letterboxd_uri:
     "https://letterboxd.com/tabula_rasta/film/singin-in-the-rain/",
@@ -38,7 +38,7 @@ const review2 = {
   watched_date: ""
 };
 
-describe("letterboxd ratings model", () => {
+describe("letterboxd reviews model", () => {
   it("should insert the provided rating into the db", async () => {
     let rating = await addReview(review1);
     expect(rating.name).toBe("Reservoir Dogs");

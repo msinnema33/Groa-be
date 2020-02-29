@@ -4,7 +4,7 @@ exports.up = function(knex) {
     tbl.date("date");
     tbl.string("name");
     tbl.integer("year");
-    tbl.float("rating");
+    tbl.decimal("rating", 2, 1);
     tbl
       .integer("user_id")
       .unsigned()

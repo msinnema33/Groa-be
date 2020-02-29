@@ -38,6 +38,17 @@ router.post("/:user_id/uploading", (req, res) => {
       }
 
       /**
+       * Creates an random id based on a very large number
+       * @returns {integer}
+       */
+      function createId() {
+        function getRandom(max) {
+          return Math.floor(Math.random() * Math.floor(max));
+        }
+        return getRandom(2 ^ 53) ^ 13;
+      }
+
+      /**
        * Creates unique temp file path, parses csv to json structure to match db schema.
        * @param {string} path - temp file path given from unzipper library
        * @param {string} name - name of file to add a unique part of the file name to access it
@@ -51,17 +62,20 @@ router.post("/:user_id/uploading", (req, res) => {
           .on("data", function(data) {
             // updateable variable to make sure data types are correct before inserting into database
             let parsed = {
+              id: createId(),
               date: new Date(data.Date + "Z"),
               name: data.Name,
               year: Number(data.Year),
-              rating: data.rating === null ? null : Number(data.rating),
+              rating: data.Rating !== "" ? data.Rating * 1 : undefined, //
               user_id: Number(req.params.user_id)
             };
             // seperating files
             switch (name) {
               case "ratings.csv":
                 parsed = { ...parsed };
-                addRating(parsed);
+                addRating(parsed)
+                  .then(() => null)
+                  .catch(err => console.log(err.message));
                 break;
               case "reviews.csv":
                 // may have to update rating data type based on Niki's response
@@ -74,27 +88,28 @@ router.post("/:user_id/uploading", (req, res) => {
                   tags: data.Tags,
                   watched_date: data["Watched Date"]
                 };
-                addReview(parsed);
+                addReview(parsed)
+                  .then(() => null)
+                  .catch(err => console.log(err.message));
                 break;
               case "watched.csv":
                 parsed = {
+                  id: createId(),
                   date: new Date(data.Date + "Z"),
                   name: data.Name,
                   year: Number(data.Year),
                   letterboxd_uri: data["Letterboxd URI"],
                   user_id: Number(req.params.user_id)
                 };
-                addToWatched(parsed);
+                addToWatched(parsed)
+                  .then(() => null)
+                  .catch(err => console.log(err.message));
                 break;
               case "watchlist.csv":
-                parsed = {
-                  date: new Date(data.Date + "Z"),
-                  name: data.Name,
-                  year: Number(data.Year),
-                  letterboxd_uri: data["Letterboxd URI"],
-                  user_id: Number(req.params.user_id)
-                };
-                addToWatchList(parsed);
+                parsed = { ...parsed };
+                addToWatchList(parsed)
+                  .then(() => null)
+                  .catch(err => console.log(err.message));
                 break;
               default:
                 let err = new Error(

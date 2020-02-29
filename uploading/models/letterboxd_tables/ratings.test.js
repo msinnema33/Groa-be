@@ -10,14 +10,14 @@ const rating1 = {
   date: new Date("2020-02-14" + "Z"),
   name: "The Princess Bride",
   year: Number("1987"),
-  rating: Number(3.5),
+  rating: parseFloat("3.5", 1),
   user_id: Number(2)
 };
 const rating2 = {
   date: new Date("2020-02-14" + "Z"),
   name: "Aladdin",
   year: Number(1992),
-  rating: Number(4),
+  rating: parseFloat("4", 1),
   user_id: Number(2)
 };
 

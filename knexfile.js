@@ -3,7 +3,7 @@ require("dotenv").config();
 const dbConnection = process.env.DATABASE_URL;
 
 const dbObj = {
-  client: "pg",
+  client: "postgresql",
   connection: dbConnection,
   migrations: {
     directory: "./migrations"
