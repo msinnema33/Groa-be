@@ -33,11 +33,8 @@ function getUserById(id) {
 function getUserRecommendations(id) {
   return db("recommendations as r")
     .select(
-      "r.user_id",
-      "r.recommendation_id",
       "r.recommendation_json",
-      "u.user_name",
     )
-    .join("users as u", "r.user_id", "=", "u.id")
-    .where("r.user_id", id);
+    .where("r.user_id", id)
+    .first();
 }

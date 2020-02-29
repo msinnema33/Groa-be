@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
-const authenticate = require("../authenticate-middleware.js");
+const { signToken, authToken } = require("../authenticate-middleware.js");
 const router = express.Router();
 
 const Users = require("./users-model");
@@ -56,40 +56,26 @@ router.post("/login", (req, res) => {
 // })
 
 // GET specific User's recommendations /api/users/:id/recommendations
-router.get("/:id/recommendations", (req, res) => {
+router.get("/:id/recommendations", authToken, (req, res) => {
   const { id } = req.params;
 
-  // Users.getUserRecommendations(id)
-  //   .then(recommendations => {
-  //     if (recommendations.length > 0) {
-      //   res.json(recommendations);
-      // } else {
+  Users.getUserRecommendations(id)
+    .then(recommendations => {
+      if (recommendations.recommendation_json.length > 0) {
+        res.status(200).json(recommendations);
+      } else {
         axios.post("http://ace1034515a4911ea8ecd028f1b5a1bc-1712147317.us-east-1.elb.amazonaws.com/movie-recommender", id, {headers: {"Content-Type":"application/json"}})
         .then(response => {
           res.status(200).json(response.data)
         })
-    //   }
-    // })
+        .catch(error => {
+          res.status(404).json({ error, message: "Recommendations not available at this time, try adding your Letterboxd data."})
+        })
+      }
+    })
     .catch(error => {
-      res.status(500).json(error);
+      res.status(500).json({ error, errorMessage: "Could not retrieve any recommendations for your account."});
     });
 });
-
-
-// ---------- Function for creating and signing token ----------- //
-
-function signToken(user) {
-  const payload = {
-    username: user.username
-  };
-
-  const secret = process.env.JWT_SECRET || "secret code";
-
-  const options = {
-    expiresIn: "8h"
-  };
-
-  return jwt.sign(payload, secret, options);
-}
 
 module.exports = router;

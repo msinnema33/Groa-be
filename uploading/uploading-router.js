@@ -77,7 +77,7 @@ router.post("/:user_id/uploading", (req, res) => {
                 parsed = { ...parsed };
                 console.log(parsed)
                 addRating(parsed)
-                  .then(() => null)
+                  .then(res => res.status(200).json({ message: "Successfully added to rated films."}))
                   .catch(err => console.log(err.message));
                 break;
               case "reviews.csv":
@@ -105,7 +105,7 @@ router.post("/:user_id/uploading", (req, res) => {
                   user_id: Number(req.params.user_id)
                 };
                 addToWatched(parsed)
-                  .then(() => null)
+                  .then(res => res.status(200).json({ message: "Successfully added to watched films."}))
                   .catch(err => console.log(err.message));
                 break;
               case "watchlist.csv":
