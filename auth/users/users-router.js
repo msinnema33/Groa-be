@@ -59,15 +59,21 @@ router.post("/login", (req, res) => {
 router.get("/:id/recommendations", authToken, (req, res) => {
   const { id } = req.params;
 
-  Users.getUserRecommendations(id)
+ Users.getUserRecommendations(id)
     .then(recommendations => {
       if (recommendations.recommendation_json.length > 0) {
         res.status(200).json(recommendations);
-      } else {
-        axios.post("http://ace1034515a4911ea8ecd028f1b5a1bc-1712147317.us-east-1.elb.amazonaws.com/movie-recommender", id, {headers: {"Content-Type":"application/json"}})
+      } else {  
+        axios.post("http://aa7c9a7565b3711ea998d0aa59a45607-781297712.us-east-1.elb.amazonaws.com/movie-recommender", id, {headers: {"Content-Type":"application/json"}})
         .then(response => {
           res.status(200).json(response.data)
         })
+        .finally( 
+          Users.getUserRecommendations(id)
+          .then(recommendations => {
+            res.status(200).json(recommendations)
+          })
+        )
         .catch(error => {
           res.status(404).json({ error, message: "Recommendations not available at this time, try adding your Letterboxd data."})
         })
