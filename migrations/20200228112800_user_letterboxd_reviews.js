@@ -1,0 +1,26 @@
+exports.up = function(knex) {
+  return knex.schema.createTable("user_letterboxd_reviews", tbl => {
+    tbl.increments();
+    tbl.date("date");
+    tbl.string("name");
+    tbl.integer("year");
+    tbl.decimal("rating", 2, 1);
+    tbl.string("letterboxd_uri");
+    tbl.string("rewatch");
+    tbl.text("review");
+    tbl.string("tags");
+    tbl.string("watched_date");
+    tbl
+      .integer("user_id")
+      .unsigned()
+      .notNullable()
+      .references("id")
+      .inTable("users")
+      .onDelete("CASCADE")
+      .onUpdate("CASCADE");
+  });
+};
+
+exports.down = function(knex) {
+  return knex.schema.dropTableIfExists("user_letterboxd_reviews");
+};
