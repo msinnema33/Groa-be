@@ -23,13 +23,13 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  let { username, password } = req.body;
-  Users.findBy({ username })
+  let { user_name, password } = req.body;
+  Users.findBy( user_name )
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = signToken(user);
         res.status(200).json({
-          message: `${user.username} Logged In!`,
+          message: `${user.user_name} Logged In!`,
           token,
           id: user.id
         });

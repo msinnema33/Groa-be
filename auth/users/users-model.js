@@ -18,9 +18,9 @@ function add(user) {
     });
 }
 
-function findBy(username) {
+function findBy(user_name) {
   return db("users")
-    .where(username)
+    .where("user_name", user_name)
     .first();
 }
 
