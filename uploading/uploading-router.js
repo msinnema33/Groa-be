@@ -14,7 +14,7 @@ router.use(
 );
 
 // model functions
-const { addRating } = require("./models/letterboxd_tables/ratings.js");
+const { addRating, getRatings } = require("./models/letterboxd_tables/ratings.js");
 const { addReview } = require("./models/letterboxd_tables/reviews.js");
 const { addToWatched } = require("./models/letterboxd_tables/watched.js");
 const { addToWatchList } = require("./models/letterboxd_tables/watch_list.js");
@@ -138,7 +138,8 @@ router.post("/:user_id/uploading", (req, res) => {
         default:
           entry.autodrain();
       }
-    });
+    })
+    res.end(res.status(200).json({ message: "Upload successful!"}))
 });
 
 module.exports = router;
