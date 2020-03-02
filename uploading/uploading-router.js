@@ -27,7 +27,6 @@ router.post("/:user_id/uploading", (req, res) => {
     .pipe(unzipper.Parse())
     .on("entry", function(entry) {
       const fileName = entry.path;
-      console.log(fileName)
 
       /**
        * Cleans up a string with \r and \n in it.
@@ -75,9 +74,8 @@ router.post("/:user_id/uploading", (req, res) => {
             switch (name) {
               case "ratings.csv":
                 parsed = { ...parsed };
-                console.log(parsed)
                 addRating(parsed)
-                  .then(res => res.status(200).json({ message: "Successfully added to rated films."}))
+                  .then(() => null)
                   .catch(err => console.log(err.message));
                 break;
               case "reviews.csv":
@@ -105,7 +103,7 @@ router.post("/:user_id/uploading", (req, res) => {
                   user_id: Number(req.params.user_id)
                 };
                 addToWatched(parsed)
-                  .then(res => res.status(200).json({ message: "Successfully added to watched films."}))
+                  .then(() => null)
                   .catch(err => console.log(err.message));
                 break;
               case "watchlist.csv":
@@ -140,7 +138,7 @@ router.post("/:user_id/uploading", (req, res) => {
         default:
           entry.autodrain();
       }
-    })
+    });
 });
 
 module.exports = router;
