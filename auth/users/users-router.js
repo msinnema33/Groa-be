@@ -64,7 +64,10 @@ router.get("/:id/recommendations", authToken, (req, res) => {
       if (recommendations && recommendations.recommendation_json.length > 0) {
         res.status(200).json(recommendations);
       } else {  
-        axios.post("http://a019b0a6e5ca111eaa5e61268ccf1425-1710733059.us-east-1.elb.amazonaws.com/movie-recommender", id, {headers: {"Content-Type":"application/json"}})
+        axios.post(
+          "http://a019b0a6e5ca111eaa5e61268ccf1425-1710733059.us-east-1.elb.amazonaws.com/movie-recommender", 
+          id, 
+          {headers: {"Content-Type":"application/json"}})
         .then(response => {
           res.status(200).json(response.data)
         })

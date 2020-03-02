@@ -1,8 +1,7 @@
 const db = require("../../../database/dbConfig.js");
 
 module.exports = { 
-  addRating,
-  getRatings
+  addRating
  };
 
 async function addRating(rating) {
@@ -24,8 +23,3 @@ async function addRating(rating) {
     }
   }) 
 };
-
-function getRatings(id) {
-  return db("user_letterboxd_ratings")
-  .where("user_id", id )
-}

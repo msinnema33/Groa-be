@@ -8,7 +8,9 @@ const uploadingRouter = require("../uploading/uploading-router.js");
 const server = express();
 
 server.use(helmet());
-server.use(cors());
+server.use(cors({
+  origin: 'https://dashboard.d1ms51d9oybzjy.amplifyapp.com/'
+}));
 server.use(express.json());
 
 server.use("/docs", express.static("./docs"));
