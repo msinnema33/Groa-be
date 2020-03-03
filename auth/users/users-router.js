@@ -56,29 +56,29 @@ router.post("/login", (req, res) => {
 // })
 
 // GET specific User's recommendations /api/users/:id/recommendations
-router.get("/:id/recommendations", authToken, (req, res) => {
+router.get("/:id/recommendations", (req, res) => {
   const { id } = req.params;
 
  Users.getUserRecommendations(id)
     .then(recommendations => {
-      if (recommendations && recommendations.recommendation_json.length > 0) {
+      console.log(recommendations)
+      if (recommendations) {
         res.status(200).json(recommendations);
       } else {  
         axios.post(
-          "http://a019b0a6e5ca111eaa5e61268ccf1425-1710733059.us-east-1.elb.amazonaws.com/movie-recommender", 
-          id, 
-          {headers: {"Content-Type":"application/json"}})
-        .then(response => {
-          res.status(200).json(response.data)
-        })
-        .finally( 
+        "http://a019b0a6e5ca111eaa5e61268ccf1425-1710733059.us-east-1.elb.amazonaws.com/movie-recommender", 
+        id, 
+        {headers: {"Content-Type":"application/json"}}
+        )
+        .then( response => {
+          if(response.data === "user_id not found"){
+            res.status(404).json({ message: "Recommendations not available at this time, try adding your Letterboxd data."})
+          }
           Users.getUserRecommendations(id)
           .then(recommendations => {
+            console.log(recommendations)
             res.status(200).json(recommendations)
           })
-        )
-        .catch(error => {
-          res.status(404).json({ error, message: "Recommendations not available at this time, try adding your Letterboxd data."})
         })
       }
     })
