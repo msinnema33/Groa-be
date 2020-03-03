@@ -1,6 +1,6 @@
 # API Documentation
 
-#### Backend delpoyed at [AWS Elastic Beanstalk](http://groabe-env.v3umry9g8h.us-east-1.elasticbeanstalk.com) <br>
+#### Backend delpoyed at [AWS Elastic Beanstalk](https://api.groa.us) <br>
 
 ## Getting started
 
