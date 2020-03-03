@@ -15,10 +15,10 @@ To get the server running locally:
 
 Express
 
--    Point One
--    Point Two
--    Point Three
--    Point Four
+-    RESTful API
+-    Straightforward sever construction
+-    Stable and widely used
+-    Can be built upon
 
 ## Endpoints
 
@@ -28,8 +28,8 @@ Express
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
 | POST    | `/api/users/register` |  | Creates a new user. |
 | POST   | `/api/users/login` |  | Logs in an existing user. |
-| POST   | `/api/users/:id/uploading` |  | Uploads zip file from Letterboxd. |
-| GET   | `/api/users/:id/recommendations` |  | Returns recommendations based on user upload. |
+| POST   | `/api/users/:id/uploading` |  | Uploads zip file from Letterboxd, unzips, parses and cleans each file and adds them to their respective tables in the database. If a movie with the same letterboxd_uri exists on the users account it will update variable information in place. |
+| GET   | `/api/users/:id/recommendations` |  | Returns recommendations based on user ratings. Returns results from the database, if none found will POST the user_id to the data science recommendation endpoint and then return the newly added recommendations or a prompt to add more reviews.|
 
 
 # Data Model
@@ -165,7 +165,7 @@ Express
 
 `addToWatched()` -> Takes watched.csv file from zip upload and adds to user_letterboxd_watched.
 
-`getUserRecommendations(id)` -> Return film recommendations based on user_letterboxd_ratings. 
+`getUserRecommendations(id)` -> Returns recommendations based on user ratings. Returns results from the database, if none found will POST the user_id to the data science recommendation endpoint and then return the newly added recommendations or a prompt to add more reviews.
 
 
 ## 3️⃣ Environment Variables
