@@ -23,11 +23,13 @@ describe('Users Router', function() {
         it ('should register a user', async function() {
             await request(server)
                 .post('/api/users/register')
-                .send({ 
-                    user_name: 'user1', 
-                    password: 'password',
-                    email: 'name@email.com'
-                })
+                .send(
+                    { 
+                        user_name: 'user1', 
+                        password: 'password',
+                        email: 'name@email.com'
+                    }
+                )
                 .then(res => {
                     expect(res.type).toMatch(/json/i);
                     expect(res.body).toEqual(expect.objectContaining(
@@ -41,7 +43,11 @@ describe('Users Router', function() {
         it ('should NOT register a user', async function() {
             await request(server)
                 .post('/api/users/register')
-                .send({ user_name: 'User2' })
+                .send(
+                    { 
+                        user_name: 'User2' 
+                    }
+                )
                 .expect(500)
                 .then(res => {
                     expect(res.status).toBe(500);
@@ -72,7 +78,12 @@ describe('Users Router', function() {
         it ('should NOT login a user', async function() {
             await request(server)
                 .post('/api/users/login')
-                .send({ user_name: 'User5', password: 'pass1234' })
+                .send(
+                    { 
+                        user_name: 'User5', 
+                        password: 'pass1234' 
+                    }
+                )
                 .expect(401);
         });
     });

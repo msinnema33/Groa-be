@@ -12,15 +12,22 @@ router.post("/register", (req, res) => {
   let userData = req.body;
   const hash = bcrypt.hashSync(userData.password, 8);
   userData.password = hash;
-  Users.add(userData)
-    .then(user => {
-        res.status(200).json({
-          message: `Registration successful ${user.user_name}!`,
-          id: user.id
-        });
-    })
+  Users.findBy( userData.user_name )
+  .then(user => {
+    if(!user) {
+      Users.add(userData)
+      .then(user => {
+          res.status(200).json({
+            message: `Registration successful ${user.user_name}!`,
+            id: user.id
+          });
+      })
+    } else {
+      res.status(400).json({ errorMessage: "Username already in use!" });
+    }
+  })
     .catch(error => {
-      res.status(500).json({ errorMessage: "Failed to register new user " });
+      res.status(500).json({ errorMessage: "Failed to register new user" });
     });
 });
 
@@ -72,7 +79,7 @@ router.get("/:id/recommendations", (req, res) => {
         {headers: {"Content-Type":"application/json"}}
         )
         .then( response => {
-          if(response.data === "user_id not found"){
+          if(response.data === "user_id not found" || response.data === "user_id not found in IMDB ratings or Letterboxd ratings"){
             res.status(404).json({ message: "Recommendations not available at this time, try adding your Letterboxd data."})
           }
           Users.getUserRecommendations(id)
