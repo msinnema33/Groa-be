@@ -12,13 +12,14 @@ router.post("/register", (req, res) => {
   let userData = req.body;
   const hash = bcrypt.hashSync(userData.password, 8);
   userData.password = hash;
-  console.log(userData);
   Users.add(userData)
     .then(user => {
-      res.status(201).json(user);
+        res.status(200).json({
+          message: `Registration successful ${user.user_name}!`,
+          id: user.id
+        });
     })
     .catch(error => {
-      console.log(error);
       res.status(500).json({ errorMessage: "Failed to register new user " });
     });
 });
@@ -66,7 +67,7 @@ router.get("/:id/recommendations", (req, res) => {
         res.status(200).json(recommendations);
       } else {  
         axios.post(
-        "http://a019b0a6e5ca111eaa5e61268ccf1425-1710733059.us-east-1.elb.amazonaws.com/movie-recommender", 
+        "http://a13327d835de211ea92c80a488b922f7-342789911.us-east-1.elb.amazonaws.com/movie-recommender", 
         id, 
         {headers: {"Content-Type":"application/json"}}
         )

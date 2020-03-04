@@ -14,18 +14,28 @@ describe('Users Router', function() {
     });
     beforeEach(async function() {
         await db.raw('TRUNCATE users RESTART IDENTITY CASCADE');
+
     });
+    afterEach(async function() {
+        await db.raw('TRUNCATE user_letterboxd_ratings RESTART IDENTITY CASCADE');
+    })
     describe('POST /api/users/register', function() {
         it ('should register a user', async function() {
             await request(server)
                 .post('/api/users/register')
                 .send({ 
                     user_name: 'user1', 
-                    password: 'password'
+                    password: 'password',
+                    email: 'name@email.com'
                 })
                 .then(res => {
                     expect(res.type).toMatch(/json/i);
-                    expect(res.body).toEqual(expect.objectContaining({ user_name: 'user1' }));
+                    expect(res.body).toEqual(expect.objectContaining(
+                        {
+                            "id": 1, 
+                            "message": "Registration successful user1!"
+                        }
+                    ));
                 })
         });
         it ('should NOT register a user', async function() {
@@ -42,10 +52,21 @@ describe('Users Router', function() {
         it ('should login a user', async function() {
             await request(server)
                 .post('/api/users/register')
-                .send({ user_name: 'User2', password: 'pass1234'})
+                .send(
+                    { 
+                        user_name: 'User2', 
+                        password: 'pass1234',
+                        email: 'name@email.com'
+                    }
+                )
             await request(server)
                 .post('/api/users/login')
-                .send({ user_name: 'User2', password: 'pass1234'})
+                .send(
+                    { 
+                        user_name: 'User2', 
+                        password: 'pass1234'
+                    }
+                )
                 .expect(200);
             });
         it ('should NOT login a user', async function() {
@@ -55,4 +76,12 @@ describe('Users Router', function() {
                 .expect(401);
         });
     });
+    describe('GET /api/users/:id/recommendations', function() {
+        it('should return recommendations for a given user', async function() {
+            await db.seed.run();
+            await request(server)
+                .get('/api/users/3/recommendations')
+                .expect(500)
+        })
+    })
 });

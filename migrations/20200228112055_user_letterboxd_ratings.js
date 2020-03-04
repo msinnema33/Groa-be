@@ -4,7 +4,8 @@ exports.up = function(knex) {
     tbl.date("date");
     tbl.string("name");
     tbl.integer("year");
-    tbl.decimal("rating", 2, 1);
+    tbl.string("letterboxd_uri");
+    tbl.float("rating");
     tbl
       .integer("user_id")
       .unsigned()

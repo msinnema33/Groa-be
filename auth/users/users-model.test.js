@@ -12,10 +12,13 @@ describe('users-model', function() {
     });
     describe('add()', function() {
         it('adds user to db', async function() {
-            const user = await USERS.add({
-                user_name: 'username', 
-                password: 'password', 
-            });
+            const user = await USERS.add(
+                {
+                    user_name: 'username', 
+                    password: 'password',
+                    email: 'name@email.com'
+                }
+            );
             expect(user.user_name).toBe('username')
             expect(user.id).toBe(1)
             const users = await db('users')
@@ -24,19 +27,19 @@ describe('users-model', function() {
         });
     });
     describe('findBy(user_name)', function() {
-        it('returns user by username', async function() {
+        it('returns user by user_name', async function() {
             await db.seed.run();
-            const user = await USERS.findBy('user2')
-            expect(user.user_name).toBe('user2')
-            expect(user.id).toBe(2)
+            const user = await USERS.findBy('blubsbunny')
+            expect(user.user_name).toBe('blubsbunny')
+            expect(user.id).toBe(1)
         });
     });
     describe('getUserById(id)', function() {
         it('returns user by user id', async function() {
             await db.seed.run();
-            const user = await USERS.getUserById(1)
-            expect(user.user_name).toBe('user1')
-            expect(user.id).toBe(1)
+            const user = await USERS.getUserById(3)
+            expect(user.user_name).toBe('gustydad')
+            expect(user.id).toBe(3)
         });
     });
     describe('getUserRecommendations(id)', function() {
@@ -45,7 +48,7 @@ describe('users-model', function() {
         it('returns a list of all users and their id', async function() {
             await db.seed.run();
             const users = await USERS.findUsers();
-            expect(users).toHaveLength(3);
+            expect(users).toHaveLength(5);
         });
     });
     describe('findRatings()', function() {

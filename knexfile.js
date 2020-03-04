@@ -13,8 +13,9 @@ const dbObj = {
   },
   pool: {
     min: 2,
-    max: 10
-  }
+    max: 10,
+  },
+
 };
 // The different DB environment setups
 module.exports = {
@@ -23,7 +24,12 @@ module.exports = {
   },
   testing: {
     ...dbObj,
-    connection: process.env.TESTING_DB_URL
+    connection: process.env.TESTING_DB_URL,
+    pool: {
+      min: 0,
+      max: 10,
+      idleTimeoutMillis: 500
+    },
   },
   production: {
     ...dbObj

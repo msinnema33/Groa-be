@@ -4,6 +4,7 @@ module.exports = {
   add,
   findBy,
   getUserById,
+  findUsers,
   getUserRecommendations
 };
 
@@ -28,6 +29,11 @@ function getUserById(id) {
   return db("users")
     .where({ id })
     .first();
+}
+
+function findUsers() {
+  return db("users")
+    .select("user_name", "id")
 }
 
 function getUserRecommendations(id) {
