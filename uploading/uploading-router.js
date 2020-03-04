@@ -38,17 +38,6 @@ router.post("/:user_id/uploading", (req, res) => {
       }
 
       /**
-       * Creates an random id based on a very large number
-       * @returns {integer}
-       */
-      // function createId() {
-      //   function getRandom(max) {
-      //     return Math.floor(Math.random() * Math.floor(max));
-      //   }
-      //   return getRandom(2 ^ 53) ^ 13;
-      // }
-
-      /**
        * Creates unique temp file path, parses csv to json structure to match db schema.
        * @param {string} path - temp file path given from unzipper library
        * @param {string} name - name of file to add a unique part of the file name to access it
