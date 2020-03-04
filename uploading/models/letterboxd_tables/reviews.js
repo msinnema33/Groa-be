@@ -12,11 +12,9 @@ async function addReview(review) {
   .andWhere("user_id", review.user_id)
   .then(reviews => {
     if(reviews.length === 0) {
-      console.log("ADDING REVIEW:", review.review)
       return db("user_letterboxd_reviews")
       .insert(review, "id")
     } else {
-      console.log("UPDATING REVIEW:", review.review)
       return db("user_letterboxd_reviews")
       .where("letterboxd_uri", review.letterboxd_uri)
       .andWhere("user_id", review.user_id)

@@ -13,7 +13,6 @@ async function addRating(rating) {
   .andWhere("user_id", rating.user_id)
   .then(ratings => {
     if(ratings.length === 0) {
-      console.log("ADDING RATING:", rating.name)
       return db("user_letterboxd_ratings")
       .insert(rating, "id")
       .then(ids => {
@@ -23,7 +22,6 @@ async function addRating(rating) {
           .first();
       })
     } else{
-      console.log("UPDATING RATING:", rating.name)
       return db("user_letterboxd_ratings")
       .where("letterboxd_uri", rating.letterboxd_uri)
       .andWhere("user_id", rating.user_id)
