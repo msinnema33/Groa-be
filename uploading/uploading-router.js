@@ -8,13 +8,13 @@ router.use(
   fileUpload({
     parseNested: true,
     useTempFiles: true,
-    tempFileDir: "/node_modules/",
+    tempFileDir: "/tmp/",
     cleanup: true
   })
 );
 
 // model functions
-const { addRating } = require("./models/letterboxd_tables/ratings.js");
+const { addRating, getRatings } = require("./models/letterboxd_tables/ratings.js");
 const { addReview } = require("./models/letterboxd_tables/reviews.js");
 const { addToWatched } = require("./models/letterboxd_tables/watched.js");
 const { addToWatchList } = require("./models/letterboxd_tables/watch_list.js");
@@ -38,17 +38,6 @@ router.post("/:user_id/uploading", (req, res) => {
       }
 
       /**
-       * Creates an random id based on a very large number
-       * @returns {integer}
-       */
-      function createId() {
-        function getRandom(max) {
-          return Math.floor(Math.random() * Math.floor(max));
-        }
-        return getRandom(2 ^ 53) ^ 13;
-      }
-
-      /**
        * Creates unique temp file path, parses csv to json structure to match db schema.
        * @param {string} path - temp file path given from unzipper library
        * @param {string} name - name of file to add a unique part of the file name to access it
@@ -62,10 +51,11 @@ router.post("/:user_id/uploading", (req, res) => {
           .on("data", function(data) {
             // updateable variable to make sure data types are correct before inserting into database
             let parsed = {
-              id: createId(),
+              // id: createId(),
               date: new Date(data.Date + "Z"),
               name: data.Name,
               year: Number(data.Year),
+              letterboxd_uri: data["Letterboxd URI"],
               rating: data.Rating !== "" ? data.Rating * 1 : undefined, //
               user_id: Number(req.params.user_id)
             };
@@ -94,7 +84,7 @@ router.post("/:user_id/uploading", (req, res) => {
                 break;
               case "watched.csv":
                 parsed = {
-                  id: createId(),
+                  // id: createId(),
                   date: new Date(data.Date + "Z"),
                   name: data.Name,
                   year: Number(data.Year),
@@ -144,7 +134,8 @@ router.post("/:user_id/uploading", (req, res) => {
         default:
           entry.autodrain();
       }
-    });
+    })
+    res.end(res.status(200).json({ message: "Upload successful!"}))
 });
 
 module.exports = router;

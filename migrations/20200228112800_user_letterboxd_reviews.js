@@ -4,7 +4,7 @@ exports.up = function(knex) {
     tbl.date("date");
     tbl.string("name");
     tbl.integer("year");
-    tbl.decimal("rating", 2, 1);
+    tbl.float("rating");
     tbl.string("letterboxd_uri");
     tbl.string("rewatch");
     tbl.text("review");

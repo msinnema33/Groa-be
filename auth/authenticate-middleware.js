@@ -1,7 +1,22 @@
 const jwt = require('jsonwebtoken');
 
+// ---------- Function for creating and signing token ----------- //
 
-module.exports = (req, res, next) => {
+function signToken(user) {
+  const payload = {
+    username: user.username
+  };
+
+  const secret = process.env.JWT_SECRET || "secret code";
+
+  const options = {
+    expiresIn: "8h"
+  };
+
+  return jwt.sign(payload, secret, options);
+}
+
+const authToken = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (authorization) {
@@ -19,3 +34,8 @@ module.exports = (req, res, next) => {
     res.status(400).json({ message: 'Please login and try again' });
   }
 };
+
+module.exports = {
+  signToken,
+  authToken
+}

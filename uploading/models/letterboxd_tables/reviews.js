@@ -1,10 +1,30 @@
 const db = require("../../../database/dbConfig.js");
 
-module.exports = { addReview };
+module.exports = { 
+  addReview,
+  getReviewById
+};
 
 async function addReview(review) {
-  const [id] = await db("user_letterboxd_reviews").insert(review, "id");
-  return db("user_letterboxd_reviews")
-    .where({ id })
-    .first();
+  await db("user_letterboxd_reviews")
+  .select('*')
+  .where("letterboxd_uri", review.letterboxd_uri)
+  .andWhere("user_id", review.user_id)
+  .then(reviews => {
+    if(reviews.length === 0) {
+      return db("user_letterboxd_reviews")
+      .insert(review, "id")
+    } else {
+      return db("user_letterboxd_reviews")
+      .where("letterboxd_uri", review.letterboxd_uri)
+      .andWhere("user_id", review.user_id)
+      .update("review", review.review, "id")
+    }
+  })
 }
+
+function getReviewById(id) {
+  return db("user_letterboxd_reviews")
+    .where("id", id )
+    .first();
+};

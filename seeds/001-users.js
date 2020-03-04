@@ -20,7 +20,17 @@ exports.seed = function(knex) {
           user_name: "gustydad",
           password: `${bcrypt.hashSync("Password1234!", 10)}`,
           email: "gustydad@gmail.com"
-        }
+        },
+        {
+          user_name: "catbirdseat",
+          password: `${bcrypt.hashSync("Password1234!", 10)}`,
+          email: "catbirdseat@email.com"
+        },
+        {
+          user_name: "livinlarge",
+          password: `${bcrypt.hashSync("Password1234!", 10)}`,
+          email: "livinlarge@email.com"
+        },
       ]);
     });
 };

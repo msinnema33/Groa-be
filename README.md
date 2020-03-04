@@ -1,74 +1,38 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### Backend delpoyed at [AWS Elastic Beanstalk](https://api.groa.us) <br>
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
-
 - Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+- **npm install** to install all required dependencies
+- **npm run server** to start the local server
+- **npm test** to start server using testing environment
 
-### Backend framework goes here
+### Express
 
-🚫 Why did you choose this framework?
+Express
 
--    Point One
--    Point Two
--    Point Three
--    Point Four
+-    RESTful API
+-    Straightforward sever construction
+-    Stable and widely used
+-    Can be built upon
 
-## 2️⃣ Endpoints
-
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
-
-#### Organization Routes
-
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+## Endpoints
 
 #### User Routes
 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+| POST    | `/api/users/register` |  | Creates a new user. |
+| POST   | `/api/users/login` |  | Logs in an existing user. |
+| POST   | `/api/users/:id/uploading` |  | Uploads zip file from Letterboxd, unzips, parses and cleans each file and adds them to their respective tables in the database. If a movie with the same letterboxd_uri exists on the users account it will update variable information in place. |
+| GET   | `/api/users/:id/recommendations` |  | Returns recommendations based on user ratings. Returns results from the database, if none found will POST the user_id to the data science recommendation endpoint and then return the newly added recommendations or a prompt to add more reviews.|
+
 
 # Data Model
-
-🚫This is just an example. Replace this with your data model
-
-#### 2️⃣ ORGANIZATIONS
-
----
-
-```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
-}
-```
 
 #### USERS
 
@@ -76,45 +40,133 @@ To get the server running locally:
 
 ```
 {
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
+  id: INTEGER, INCREMENTS
+  user_name: STRING, UNIQUE
+  password: STRING,
+  has_letterboxd: BOOLEAN,
+  has_imdb: BOOLEAN,
+  last_login: DATE,
   email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+}
+```
+#####  USER RATINGS
+
+---
+##### IMDB
+```
+{
+  date: DATE
+  name: STRING
+  year: DATE
+  rating: INTEGER
+  user_id: INTEGER
+  id: INTEGER
 }
 ```
 
-## 2️⃣ Actions
+---
+##### LETTERBOXD
+```
+{
+  date: DATE
+  name: STRING
+  year: DATE
+  letterboxd_uri: STRING
+  rating: INTEGER
+  user_id: INTEGER
+  id: INTEGER
+}
+```
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+#### MOVIES
 
-`getOrgs()` -> Returns all organizations
+---
+##### IMDB/LETTERBOXD
 
-`getOrg(orgId)` -> Returns a single organization by ID
+```
+{
+  movie_id: INTEGER
+  title_type: MOVIE
+  primary_title: STRING
+  original_title: STRING
+  is_adult: BOOLEAN
+  start_year: DATE: YYYY
+  end_year: DATE: YYYY
+  runtime_minutes: INTEGER
+  genres: STRING
+}
+```
 
-`addOrg(org)` -> Returns the created org
+####  RATINGS
 
-`updateOrg(orgId)` -> Update an organization by ID
+---
+##### IMDB/LETTERBOXD
+```
+{
+  movie_id: INTEGER
+  average_rating: INTEGER
+  num_votes: INTEGER
+  id: INTEGER
+}
+```
 
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
 
-`getUser(userId)` -> Returns a single user by user ID
+#### REVIEWS
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
+---
+##### IMDB
 
-`updateUser(userId, changes object)` -> Updates a single user by ID.
+```
+{
+  movie_id: INTEGER
+  review_date: DATE
+  user_rating: INTEGER
+  helpful_num: INTEGER
+  helpful_denom: INTEGER
+  user_name: STRING
+  review_text: STRING
+  review_title: STRING
+  review_id: INTEGER
+  id: INTEGER
+}
+```
+---
+##### LETTERBOXD
 
-`deleteUser(userId)` -> deletes everything dependent on the user
+```
+{
+  movie_id: INTEGER
+  review_date: DATE
+  user_rating: INTEGER
+  review_text: STRING
+  review_title: STRING
+  review_id: INTEGER
+  user_name: STRING
+}
+```
+
+## Actions
+
+`add()` -> Creates and returns a new user.
+
+`findBy(username)` -> Returns a single user by user_name.
+
+`getUserById(id)` -> Returns a single user by ID.
+
+`findUsers()` -> Return all users and their corresponding ID.
+
+`findRatings()` -> Returns the user_letterboxd_ratings for the logged in user.
+
+`addRating()` -> Takes ratings.csv file from zip upload and adds to user_letterboxd_ratings.
+
+`addReview()` -> Takes reviews.csv file from zip upload and adds to user_letterboxd_reviews.
+
+`addToWatchList()` -> Takes watchlist.csv file from zip upload and adds to user_letterboxd_watchlist.
+
+`addToWatched()` -> Takes watched.csv file from zip upload and adds to user_letterboxd_watched.
+
+`getUserRecommendations(id)` -> Returns recommendations based on user ratings. Returns results from the database, if none found will POST the user_id to the data science recommendation endpoint and then return the newly added recommendations or a prompt to add more reviews.
+
 
 ## 3️⃣ Environment Variables
 
