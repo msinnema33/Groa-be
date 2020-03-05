@@ -52,17 +52,6 @@ router.post("/login", (req, res) => {
     });
 });
 
-// router.get("/login/google", passport.authenticate("google", {
-//     scope: ['profile']
-// }));
-
-// router.get("/login/google/redirect", passport.authenticate("google"), (req, res) => {
-//     const token = generateToken(req.user);
-
-//     res.redirect(`localhost:5000/callback?jwt=${token}&user=${JSON.stringify(req.user)}`);
-
-// })
-
 // GET specific User's recommendations /api/users/:id/recommendations
 router.get("/:id/recommendations", (req, res) => {
   const { id } = req.params;
@@ -74,7 +63,7 @@ router.get("/:id/recommendations", (req, res) => {
         res.status(200).json(recommendations);
       } else {  
         axios.post(
-        "http://a13327d835de211ea92c80a488b922f7-342789911.us-east-1.elb.amazonaws.com/movie-recommender", 
+        process.env.RECOMMENDATION_URL, 
         id, 
         {headers: {"Content-Type":"application/json"}}
         )
