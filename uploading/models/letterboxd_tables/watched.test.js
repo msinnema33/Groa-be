@@ -44,7 +44,7 @@ describe("letterboxd watched model", () => {
     expect(watchlist).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ name: "Pulp Fiction" }),
-        expect.objectContaining({ name: "The Dark Knight Rises" }),
+        expect.objectContaining({ name: "The Dark Knight Rises", id: 2 }),
         expect.objectContaining({ user_id: 2 })
       ])
     )

@@ -137,7 +137,10 @@ router.post("/:user_id/uploading", (req, res) => {
     .then(user => {
       res.status(200).json(user)
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ message: "Something went wrong retrieving your information."})
+    })
 });
 
 module.exports = router;

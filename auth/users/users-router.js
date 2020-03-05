@@ -74,18 +74,20 @@ router.get("/:id/recommendations", (req, res) => {
         res.status(200).json(recommendations);
       } else {  
         axios.post(
-        "http://a13327d835de211ea92c80a488b922f7-342789911.us-east-1.elb.amazonaws.com/movie-recommender", 
+        process.env.RECOMMENDER_URL, 
         id, 
         {headers: {"Content-Type":"application/json"}}
         )
         .then( response => {
           if(response.data === "user_id not found" || response.data === "user_id not found in IMDB ratings or Letterboxd ratings"){
-            res.status(404).json({ message: "Recommendations not available at this time, try adding your Letterboxd data."})
+            res.status(404).json({ message: `Recommendations not available at this time, try adding your Letterboxd data. Received: ${response.data}` })
           }
           Users.getUserRecommendations(id)
           .then(recommendations => {
             console.log(recommendations)
-            res.status(200).json(recommendations)
+            if (recommendations) {
+              res.status(200).json(recommendations)
+            }
           })
         })
       }
