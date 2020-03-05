@@ -97,7 +97,6 @@ router.post("/:user_id/uploading", (req, res) => {
                 break;
               case "watchlist.csv":
                 parsed = {
-                  id: createId(),
                   date: new Date(data.Date + "Z"),
                   name: data.Name,
                   year: Number(data.Year),
