@@ -9,6 +9,7 @@ const server = express();
 
 server.use(helmet());
 server.options('*', cors());
+server.use(cors());
 server.use(express.json());
 
 server.use("/docs", express.static("./docs"));

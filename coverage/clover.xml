@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1583364407349" clover="3.2.0">
-  <project timestamp="1583364407349" name="All files">
+<coverage generated="1583366433765" clover="3.2.0">
+  <project timestamp="1583366433765" name="All files">
     <metrics statements="14" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0" elements="15" coveredelements="13" complexity="0" loc="14" ncloc="14" packages="1" files="1" classes="1"/>
     <file name="server.js" path="/Users/CMRuss/GitHub/Groa-be/api/server.js">
       <metrics statements="14" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -12,12 +12,12 @@
       <line num="8" count="1" type="stmt"/>
       <line num="10" count="1" type="stmt"/>
       <line num="11" count="1" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="14" count="1" type="stmt"/>
       <line num="15" count="1" type="stmt"/>
       <line num="17" count="1" type="stmt"/>
-      <line num="18" count="1" type="stmt"/>
-      <line num="20" count="1" type="stmt"/>
-      <line num="21" count="0" type="stmt"/>
-      <line num="24" count="1" type="stmt"/>
+      <line num="18" count="0" type="stmt"/>
+      <line num="21" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>
