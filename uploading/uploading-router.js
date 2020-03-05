@@ -51,7 +51,6 @@ router.post("/:user_id/uploading", (req, res) => {
           .on("data", function(data) {
             // updateable variable to make sure data types are correct before inserting into database
             let parsed = {
-              // id: createId(),
               date: new Date(data.Date + "Z"),
               name: data.Name,
               year: Number(data.Year),
@@ -84,7 +83,6 @@ router.post("/:user_id/uploading", (req, res) => {
                 break;
               case "watched.csv":
                 parsed = {
-                  // id: createId(),
                   date: new Date(data.Date + "Z"),
                   name: data.Name,
                   year: Number(data.Year),
