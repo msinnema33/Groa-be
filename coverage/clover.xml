@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1583366433765" clover="3.2.0">
-  <project timestamp="1583366433765" name="All files">
-    <metrics statements="14" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0" elements="15" coveredelements="13" complexity="0" loc="14" ncloc="14" packages="1" files="1" classes="1"/>
+<coverage generated="1583367352529" clover="3.2.0">
+  <project timestamp="1583367352529" name="All files">
+    <metrics statements="19" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1" elements="21" coveredelements="19" complexity="0" loc="19" ncloc="19" packages="1" files="1" classes="1"/>
     <file name="server.js" path="/Users/CMRuss/GitHub/Groa-be/api/server.js">
-      <metrics statements="14" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <metrics statements="19" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -12,12 +12,17 @@
       <line num="8" count="1" type="stmt"/>
       <line num="10" count="1" type="stmt"/>
       <line num="11" count="1" type="stmt"/>
-      <line num="12" count="1" type="stmt"/>
-      <line num="14" count="1" type="stmt"/>
-      <line num="15" count="1" type="stmt"/>
+      <line num="12" count="6" type="stmt"/>
+      <line num="13" count="6" type="stmt"/>
+      <line num="14" count="6" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
       <line num="17" count="1" type="stmt"/>
-      <line num="18" count="0" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
       <line num="21" count="1" type="stmt"/>
+      <line num="23" count="1" type="stmt"/>
+      <line num="24" count="0" type="stmt"/>
+      <line num="27" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>
