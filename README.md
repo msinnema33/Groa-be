@@ -175,10 +175,10 @@ In order for the app to function correctly, the user must set up their own envir
 create a .env file that includes the following:
     
     *  DATABASE_URL=postgres://postgres:lambdaschoolgroa@groadb-dev.cbayt2opbptw.us-east-1.rds.amazonaws.com:5432/postgres
-    *TESTING_DB_URL=postgres://@localhost:5432/postgres
+    *  TESTING_DB_URL=postgres://@localhost:5432/postgres
     *  RECOMMENDATION_URL=http://a13327d835de211ea92c80a488b922f7-342789911.us-east-1.elb.amazonaws.com/movie-recommender
     *  JWT_SECRET - l4mbd4$ch00lGr04L4mbd4$ch00lGr04l4mbd4$ch00lGr04
-    * TOKEN_EXP=8h
+    *  TOKEN_EXP=8h
 
     
 ## Contributing
