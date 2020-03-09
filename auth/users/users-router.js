@@ -54,18 +54,23 @@ router.post("/login", (req, res) => {
 });
 
 // GET specific User's recommendations /api/users/:id/recommendations
-router.get("/:id/recommendations", (req, res) => {
+router.get("/:id/recommendations", async (req, res) => {
   const { id } = req.params;
 
- Users.getUserRecommendations(id)
+ await Users.getUserRecommendations(id)
     .then(recommendations => {
-      console.log(recommendations)
       if (recommendations) {
         res.status(200).json(recommendations);
       } else {  
         axios.post(
-        process.env.RECOMMENDATION_URL, 
-        id, 
+        process.env.RECOMMENDATION_URL,
+        {
+          "user_id": id,
+          "number_of_recommendations": 50,
+          "good_threshold": 5,
+          "bad_threshold": 4,
+          "harshness": 1
+        }, 
         {headers: {"Content-Type":"application/json"}}
         )
         .then( response => {
@@ -74,7 +79,6 @@ router.get("/:id/recommendations", (req, res) => {
           }
           Users.getUserRecommendations(id)
           .then(recommendations => {
-            console.log(recommendations)
             res.status(200).json(recommendations)
           })
         })
