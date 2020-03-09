@@ -19,6 +19,7 @@ router.post("/register", (req, res) => {
       .then(user => {
           res.status(200).json({
             message: `Registration successful ${user.user_name}!`,
+            user_name: user.user_name,
             id: user.id
           });
       })

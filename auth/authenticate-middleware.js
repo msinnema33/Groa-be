@@ -7,10 +7,10 @@ function signToken(user) {
     username: user.username
   };
 
-  const secret = process.env.JWT_SECRET || "secret code";
+  const secret = process.env.JWT_SECRET
 
   const options = {
-    expiresIn: "8h"
+    expiresIn: process.env.TOKEN_EXP
   };
 
   return jwt.sign(payload, secret, options);
@@ -20,7 +20,7 @@ const authToken = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (authorization) {
-    const secret = process.env.JWT_SECRET || 'secret code';
+    const secret = process.env.JWT_SECRET
 
     jwt.verify(authorization, secret, function(err, decodedToken) {
       if (err) {
