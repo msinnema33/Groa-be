@@ -9,7 +9,7 @@ const server = express();
 
 server.use(helmet());
 server.use(cors({
-  origin: "https://uploading-cors-fix.d1ms51d9oybzjy.amplifyapp.com"
+  origin: "*"
 }));
 server.use(express.json());
 
