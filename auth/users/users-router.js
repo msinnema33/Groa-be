@@ -43,11 +43,10 @@ router.post("/login", (req, res) => {
           id: user.id
         });
       } else {
-        res.status(401).json({ message: "Failed to login" });
+        res.status(401).json({ errorMessage: "Invalid credentials!" });
       }
     })
     .catch(error => {
-      console.log(error);
       res.status(500).json({ errorMessage: "Failed to retrieve credentials " });
     });
 });
