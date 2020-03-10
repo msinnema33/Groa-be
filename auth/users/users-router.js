@@ -23,7 +23,7 @@ router.post("/register", (req, res) => {
           });
       })
     } else {
-      res.status(401).json({ errorMessage: "Username already in use!" });
+      res.status(400).json({ errorMessage: "Username already in use!" });
     }
   })
     .catch(error => {
