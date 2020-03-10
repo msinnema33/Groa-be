@@ -79,7 +79,13 @@ router.get("/:id/recommendations", async (req, res) => {
           .then(recommendations => {
             res.status(200).json(recommendations)
           })
+          .catch(error => {
+            res.status(500).json({ error, errorMessage: "Could not access the recommendation server."});
+          });
         })
+        .catch(error => {
+          res.status(500).json({ error, errorMessage: "Could not access the recommendation server."});
+        });
       }
     })
     .catch(error => {
