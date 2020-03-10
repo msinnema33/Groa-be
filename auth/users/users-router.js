@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs");
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const { signToken, authToken } = require("../authenticate-middleware.js");
 const router = express.Router();
@@ -63,7 +62,7 @@ router.get("/:id/recommendations", async (req, res) => {
         res.status(200).json(recommendations);
       } else {  
         axios.post(
-        process.env.RECOMMENDATION_URL,
+        process.env.RECOMMENDER_URL,
         {
           "user_id": id,
           "number_of_recommendations": 50,
