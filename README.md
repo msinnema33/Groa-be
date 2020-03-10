@@ -179,7 +179,6 @@ create a .env file that includes the following:
     *  RECOMMENDATION_URL=http://a13327d835de211ea92c80a488b922f7-342789911.us-east-1.elb.amazonaws.com/movie-recommender
     *  JWT_SECRET - l4mbd4$ch00lGr04L4mbd4$ch00lGr04l4mbd4$ch00lGr04
     *  TOKEN_EXP=8h
-
     
 ## Contributing
 
