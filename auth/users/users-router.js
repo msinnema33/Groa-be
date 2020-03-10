@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs");
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const { signToken, authToken } = require("../authenticate-middleware.js");
 const router = express.Router();
@@ -19,6 +18,7 @@ router.post("/register", (req, res) => {
       .then(user => {
           res.status(200).json({
             message: `Registration successful ${user.user_name}!`,
+            user_name: user.user_name,
             id: user.id
           });
       })
@@ -43,39 +43,32 @@ router.post("/login", (req, res) => {
           id: user.id
         });
       } else {
-        res.status(401).json({ message: "Failed to login" });
+        res.status(401).json({ errorMessage: "Invalid credentials!" });
       }
     })
     .catch(error => {
-      console.log(error);
       res.status(500).json({ errorMessage: "Failed to retrieve credentials " });
     });
 });
 
-// router.get("/login/google", passport.authenticate("google", {
-//     scope: ['profile']
-// }));
-
-// router.get("/login/google/redirect", passport.authenticate("google"), (req, res) => {
-//     const token = generateToken(req.user);
-
-//     res.redirect(`localhost:5000/callback?jwt=${token}&user=${JSON.stringify(req.user)}`);
-
-// })
-
 // GET specific User's recommendations /api/users/:id/recommendations
-router.get("/:id/recommendations", (req, res) => {
+router.get("/:id/recommendations", async (req, res) => {
   const { id } = req.params;
 
- Users.getUserRecommendations(id)
+ await Users.getUserRecommendations(id)
     .then(recommendations => {
-      console.log(recommendations)
       if (recommendations) {
         res.status(200).json(recommendations);
       } else {  
         axios.post(
-        "http://a13327d835de211ea92c80a488b922f7-342789911.us-east-1.elb.amazonaws.com/movie-recommender", 
-        id, 
+        process.env.RECOMMENDER_URL,
+        {
+          "user_id": id,
+          "number_of_recommendations": 50,
+          "good_threshold": 5,
+          "bad_threshold": 4,
+          "harshness": 1
+        }, 
         {headers: {"Content-Type":"application/json"}}
         )
         .then( response => {
@@ -84,10 +77,15 @@ router.get("/:id/recommendations", (req, res) => {
           }
           Users.getUserRecommendations(id)
           .then(recommendations => {
-            console.log(recommendations)
             res.status(200).json(recommendations)
           })
+          .catch(error => {
+            res.status(500).json({ error, errorMessage: "Could not access the recommendation server."});
+          });
         })
+        .catch(error => {
+          res.status(500).json({ error, errorMessage: "Could not access the recommendation server."});
+        });
       }
     })
     .catch(error => {

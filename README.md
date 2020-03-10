@@ -168,17 +168,17 @@ Express
 `getUserRecommendations(id)` -> Returns recommendations based on user ratings. Returns results from the database, if none found will POST the user_id to the data science recommendation endpoint and then return the newly added recommendations or a prompt to add more reviews.
 
 
-## 3️⃣ Environment Variables
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
     
-    *  DATABASE_URL - postgres://postgres:lambdaschoolgroa@groadb-dev.cbayt2opbptw.us-east-1.rds.amazonaws.com:5432/postgres
-    *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
-    *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
+    *  DATABASE_URL=postgres://postgres:lambdaschoolgroa@groadb-dev.cbayt2opbptw.us-east-1.rds.amazonaws.com:5432/postgres
+    *  TESTING_DB_URL=postgres://@localhost:5432/postgres
+    *  RECOMMENDATION_URL=http://a13327d835de211ea92c80a488b922f7-342789911.us-east-1.elb.amazonaws.com/movie-recommender
+    *  JWT_SECRET - l4mbd4$ch00lGr04L4mbd4$ch00lGr04l4mbd4$ch00lGr04
+    *  TOKEN_EXP=8h
     
 ## Contributing
 
