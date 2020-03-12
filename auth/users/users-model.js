@@ -5,7 +5,8 @@ module.exports = {
   findBy,
   getUserById,
   findUsers,
-  getUserRecommendations
+  getUserRecommendations,
+  getMoviePoster
 };
 
 function add(user) {
@@ -43,4 +44,11 @@ function getUserRecommendations(id) {
     )
     .where("r.user_id", id)
     .first();
+}
+
+function getMoviePoster(id) {
+  return db("temp_reviews")
+  .select("poster_url")
+  .where("new_movie_id", id)
+  .first()
 }
