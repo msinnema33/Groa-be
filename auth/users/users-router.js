@@ -66,7 +66,6 @@ router.post("/login", (req, res) => {
 // GET specific User's recommendations /api/users/:id/recommendations
 router.get("/:id/recommendations", (req, res) => {
   const { id } = req.params;
-  let recs = []
 
  Users.getUserRecommendations(id)
     .then(recommendations => {
@@ -89,10 +88,16 @@ router.get("/:id/recommendations", (req, res) => {
       } else {  
         axios.post(
         process.env.RECOMMENDER_URL, 
-        id, 
+        {
+          "user_id": id,
+          "number_of_recommendations": 50,
+          "good_threshold": 5,
+          "bad_threshold": 4,
+          "harshness": 1
+        }, 
         {headers: {"Content-Type":"application/json"}}
         )
-        .then( response => {
+        .then(response => {
           if(response.data === "user_id not found" || response.data === "user_id not found in IMDB ratings or Letterboxd ratings"){
             res.status(404).json({ message: "Recommendations not available at this time, try adding your Letterboxd data."})
           }
@@ -113,8 +118,14 @@ router.get("/:id/recommendations", (req, res) => {
             ).then(recommendations => {
               res.status(200).json(recommendations);
             })
+            .catch(error => {
+              res.status(500).json({ error, errorMessage: "Could not retrieve any recommendations for your account."});
+            });
           })
-        })
+        })    
+        .catch(error => {
+          res.status(500).json({ error, errorMessage: "Could not retrieve any recommendations for your account."});
+        });
       }
     })
     .catch(error => {
