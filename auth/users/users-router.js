@@ -75,7 +75,13 @@ router.get("/:id/recommendations", (req, res) => {
       } else {  
         axios.post(
         process.env.RECOMMENDER_URL, 
-        id, 
+        {
+          "user_id": id,
+          "number_of_recommendations": 50,
+          "good_threshold": 5,
+          "bad_threshold": 4,
+          "harshness": 1
+        }, 
         {headers: {"Content-Type":"application/json"}}
         )
         .then( response => {
