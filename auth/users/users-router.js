@@ -73,11 +73,13 @@ router.get("/:id/recommendations", async (req, res) => {
         )
         .then( response => {
           if(response.data === "user_id not found" || response.data === "user_id not found in IMDB ratings or Letterboxd ratings"){
-            res.status(404).json({ message: "Recommendations not available at this time, try adding your Letterboxd data."})
+            res.status(404).json({ message: `Recommendations not available at this time, try adding your Letterboxd data. Received: ${response.data}` })
           }
           Users.getUserRecommendations(id)
           .then(recommendations => {
-            res.status(200).json(recommendations)
+            if (recommendations) {
+              res.status(200).json(recommendations)
+            }
           })
           .catch(error => {
             res.status(500).json({ error, errorMessage: "Could not access the recommendation server."});

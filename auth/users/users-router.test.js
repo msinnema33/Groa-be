@@ -2,7 +2,6 @@ const db = require('../../database/dbConfig');
 const request = require('supertest');
 const server = require('../../api/server');
 
-// ------------------- REGISTER ENDPOINT ---------------------- //
 describe('Users Router', function() {
     it('runs the tests', function() {
         expect(true).toBe(true)
@@ -87,12 +86,4 @@ describe('Users Router', function() {
                 .expect(401);
         });
     });
-    describe('GET /api/users/:id/recommendations', function() {
-        it('should return recommendations for a given user', async function() {
-            await db.seed.run();
-            await request(server)
-                .get('/api/users/3/recommendations')
-                .expect(500)
-        })
-    })
 });

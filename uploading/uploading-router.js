@@ -14,10 +14,11 @@ router.use(
 );
 
 // model functions
-const { addRating, getRatings } = require("./models/letterboxd_tables/ratings.js");
+const { addRating } = require("./models/letterboxd_tables/ratings.js");
 const { addReview } = require("./models/letterboxd_tables/reviews.js");
 const { addToWatched } = require("./models/letterboxd_tables/watched.js");
 const { addToWatchList } = require("./models/letterboxd_tables/watch_list.js");
+const { getUserData } = require("../auth/users/users-model");
 
 router.post("/:user_id/uploading", (req, res) => {
   const tempFilePath = req.files.movies.tempFilePath;
@@ -132,7 +133,14 @@ router.post("/:user_id/uploading", (req, res) => {
           entry.autodrain();
       }
     })
-    res.end(res.status(200).json({ message: "Upload successful!"}))
+    getUserData(req.params.user_id)
+    .then(user => {
+      res.status(200).json(user)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ message: "Something went wrong retrieving your information."})
+    })
 });
 
 module.exports = router;

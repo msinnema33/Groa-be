@@ -26,6 +26,7 @@ module.exports = {
     ...dbObj,
     connection: process.env.TESTING_DB_URL,
     pool: {
+      // closes hanging database connections populated during testing
       min: 0,
       max: 10,
       idleTimeoutMillis: 500
