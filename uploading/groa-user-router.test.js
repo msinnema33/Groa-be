@@ -1,9 +1,13 @@
 const request = require("supertest");
 const server = require("../api/server.js");
 
+const prepTestDB = require("../helpers/prepTestDB.js");
 const testHelpers = require("../utils/testingHelpers.js");
 
-beforeEach(testHelpers.prepDBTest("users"));
+beforeEach(function() {
+  prepTestDB();
+  testHelpers.prepTestingDB("users");
+});
 afterEach(testHelpers.truncateTable("user_groa_ratings"));
 
 describe("POST /users/:user_id/add-movie-rating", () => {
