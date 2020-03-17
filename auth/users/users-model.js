@@ -5,6 +5,7 @@ module.exports = {
   findBy,
   getUserById,
   findUsers,
+  getUserData,
   getUserRecommendations,
   getMoviePoster
 };
