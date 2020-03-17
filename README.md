@@ -28,7 +28,7 @@ Express
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
 | POST    | `/api/users/register` |  | Creates a new user. |
 | POST   | `/api/users/login` |  | Logs in an existing user. |
-| POST   | `/api/users/:id/uploading` |  | Uploads zip file from Letterboxd, unzips, parses and cleans each file and adds them to their respective tables in the database. If a movie with the same letterboxd_uri exists on the users account it will update variable information in place. |
+| POST   | `/api/users/:id/uploading` |  | Uploads zip file from Letterboxd, unzips, parses and cleans each file and adds them to their respective tables in the database. If a movie with the same letterboxd_uri exists on the users account it will update variable information in place. Returns user object with all of users uploaded data.|
 | GET   | `/api/users/:id/recommendations` |  | Returns recommendations based on user ratings. Returns results from the database, if none found will POST the user_id to the data science recommendation endpoint and then return the newly added recommendations or a prompt to add more reviews.|
 
 
@@ -144,6 +144,29 @@ Express
   user_name: STRING
 }
 ```
+#### UPLOADING
+
+```
+{
+  user_id: INTEGER
+  user_name: STRING
+  ratings: [
+    ...
+  ],
+  reviews: [
+    ...
+  ],
+  watched: [
+    ...
+  ],
+  watchlist: [
+    ...
+  ]
+}
+```
+---
+
+
 
 ## Actions
 
