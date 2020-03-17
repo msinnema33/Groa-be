@@ -3,6 +3,9 @@ const router = require("express").Router();
 // model functions
 const { addRating } = require("./models/user_groa_tables/ratings.js");
 
+// middleware
+const validateRatingBody = require("./middleware/validateRatingBody.js");
+
 /**
  * @api {post} users/:user_id/add-movie-rating Rate a movie
  * @apiName Rate a Movie
@@ -18,32 +21,21 @@ const { addRating } = require("./models/user_groa_tables/ratings.js");
  *    message: "Success"
  *  }
  *
- * @apiError {object} message, error, error message
- *
- * @apiErrorExample Error-Response:
- *  HTTP/1.1 500
- *
- * {
- *   "message": "Sorry. Something went wrong while trying to add this rating.",
- *   "error": {
- *     "name": "error",
- *     "length": 92,
- *     "severity": "ERROR",
- *     "code": "22P02"
- *   },
- *   "error_message": ""
+ * @apiErrorExample {json} Error-Response:
+ *  HTTP/1.1 400
+ *  {
+ *    message: "Please send a movie name with this request."
  *  }
+ *
  */
-router.post("/:user_id/add-movie-rating", (req, res) => {
-  let newRatingDate = new Date();
+router.post("/:user_id/add-movie-rating", validateRatingBody, (req, res) => {
   const newRating = {
-    date: newRatingDate, // has to be UTC
+    date: new Date(),
     name: req.body.name,
     year: Number(req.body.year),
     rating: req.body.rating * 1,
     user_id: Number(req.params.user_id)
   };
-
   addRating(newRating)
     .then(rated => {
       res.status(201).json(rated);
