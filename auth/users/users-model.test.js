@@ -1,5 +1,5 @@
-const db = require('../../database/dbConfig')
-const USERS = require('./users-model')
+const db = require('../../database/dbConfig');
+const USERS = require('./users-model');
 
 describe('users-model', function() {
     describe('test environment', function() {
@@ -42,8 +42,6 @@ describe('users-model', function() {
             expect(user.id).toBe(3)
         });
     });
-    describe('getUserRecommendations(id)', function() {
-    });
     describe('findUsers()', function() {
         it('returns a list of all users and their id', async function() {
             await db.seed.run();
@@ -51,9 +49,17 @@ describe('users-model', function() {
             expect(users).toHaveLength(5);
         });
     });
-    describe('findRatings()', function() {
-        it('returns an array of all a users rated films', async function() {
+    describe('getUserData()', function() {
+
+        it('returns a user object will all uploaded data as properties', async function() {
             await db.seed.run()
+            const data = await USERS.getUserData(3);
+            expect(data).toEqual(expect.objectContaining({user_id: 3}))
+            expect(data).toEqual(expect.objectContaining({
+                reviews: expect.arrayContaining([
+                    expect.objectContaining({name: "Reservoir Dogs"})
+                ]) 
+            }))
         })
     })
 })

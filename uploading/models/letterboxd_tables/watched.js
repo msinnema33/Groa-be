@@ -2,6 +2,7 @@ const db = require("../../../database/dbConfig.js");
 
 module.exports = { 
   addToWatched,
+  getWatched,
   getWatchedById
  };
 
@@ -12,12 +13,16 @@ async function addToWatched(movie) {
   .andWhere("user_id", movie.user_id)
   .then(watched => {
     if(watched.length === 0) {
-      console.log("ADDING WATCHED MOVIES", movie.name)
       return db("user_letterboxd_watched")
       .insert(movie, "id")
     }
   }) 
 }
+
+function getWatched(user_id) {
+  return db("user_letterboxd_watched")
+    .where("user_id", user_id );
+  };
 
 function getWatchedById(id) {
   return db("user_letterboxd_watched")

@@ -1,12 +1,11 @@
 const bcrypt = require("bcryptjs");
 const express = require("express");
-const axios = require("axios");
-const { signToken, authToken } = require("../authenticate-middleware.js");
+const { signToken } = require("../authenticate-middleware.js");
 const router = express.Router();
 
 const Users = require("./users-model");
 
-// REGISTER/LOGIN
+// REGISTER
 router.post("/register", (req, res) => {
   let userData = req.body;
   const hash = bcrypt.hashSync(userData.password, 8);
@@ -18,7 +17,6 @@ router.post("/register", (req, res) => {
       .then(user => {
           res.status(200).json({
             message: `Registration successful ${user.user_name}!`,
-            user_name: user.user_name,
             id: user.id
           });
       })
@@ -31,6 +29,7 @@ router.post("/register", (req, res) => {
     });
 });
 
+// LOGIN
 router.post("/login", (req, res) => {
   let { user_name, password } = req.body;
   Users.findBy( user_name )
@@ -43,53 +42,12 @@ router.post("/login", (req, res) => {
           id: user.id
         });
       } else {
-        res.status(401).json({ errorMessage: "Invalid credentials!" });
+        res.status(401).json({ message: "Failed to login" });
       }
     })
     .catch(error => {
+      console.log(error);
       res.status(500).json({ errorMessage: "Failed to retrieve credentials " });
-    });
-});
-
-// GET specific User's recommendations /api/users/:id/recommendations
-router.get("/:id/recommendations", async (req, res) => {
-  const { id } = req.params;
-
- await Users.getUserRecommendations(id)
-    .then(recommendations => {
-      if (recommendations) {
-        res.status(200).json(recommendations);
-      } else {  
-        axios.post(
-        process.env.RECOMMENDER_URL,
-        {
-          "user_id": id,
-          "number_of_recommendations": 50,
-          "good_threshold": 5,
-          "bad_threshold": 4,
-          "harshness": 1
-        }, 
-        {headers: {"Content-Type":"application/json"}}
-        )
-        .then( response => {
-          if(response.data === "user_id not found" || response.data === "user_id not found in IMDB ratings or Letterboxd ratings"){
-            res.status(404).json({ message: "Recommendations not available at this time, try adding your Letterboxd data."})
-          }
-          Users.getUserRecommendations(id)
-          .then(recommendations => {
-            res.status(200).json(recommendations)
-          })
-          .catch(error => {
-            res.status(500).json({ error, errorMessage: "Could not access the recommendation server."});
-          });
-        })
-        .catch(error => {
-          res.status(500).json({ error, errorMessage: "Could not access the recommendation server."});
-        });
-      }
-    })
-    .catch(error => {
-      res.status(500).json({ error, errorMessage: "Could not retrieve any recommendations for your account."});
     });
 });
 
