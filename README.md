@@ -147,6 +147,53 @@ Express
   user_name: STRING
 }
 ```
+#### RECOMMENDATIONS
+
+---
+##### /:ID/RECOMMENDED
+##### /:ID/RECOMMENDATIONS
+
+```
+{
+  recommendation_json: [
+    {
+      Title: STRING
+      Year: DATE
+      IMDB URL: STRING
+      Mean Rating: FLOAT
+      Votes: INTEGER
+      Similarity: FLOAT
+      ID: INTEGER
+      Gem: BOOLEAN
+      Poster URL: STRING
+    }
+```
+---
+##### /:ID/RECOMMENDATION-HISTORY
+```
+[
+  {
+    user_id: INTEGER
+    recommendation_id: STRING
+    recommendation_json: [
+      {
+        Title: STRING
+        Year: DATE
+        IMDB URL: STRING
+        Mean Rating: FLOAT
+        Votes: INTEGER
+        Similarity: FLOAT
+        ID: INTEGER
+        Gem: BOOLEAN
+        Poster URL: STRING
+      },
+      ...
+    ],
+    date: DATE
+    model_type: STRING
+  }
+```
+---
 
 ## Actions
 
