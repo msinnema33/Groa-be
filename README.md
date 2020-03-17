@@ -195,6 +195,28 @@ Express
 ```
 ---
 
+#### UPLOADING
+
+```
+{
+  user_id: INTEGER
+  user_name: STRING
+  ratings: [
+    ...
+  ],
+  reviews: [
+    ...
+  ],
+  watched: [
+    ...
+  ],
+  watchlist: [
+    ...
+  ]
+}
+```
+---
+
 ## Actions
 
 `add()` -> Creates and returns a new user.
@@ -214,6 +236,8 @@ Express
 `addToWatchList()` -> Takes watchlist.csv file from zip upload and adds to user_letterboxd_watchlist.
 
 `addToWatched()` -> Takes watched.csv file from zip upload and adds to user_letterboxd_watched.
+
+`getUserData(id)` -> Returns all user_letterboxd_ratings, _reviews, _watched, and _watchlist items found in the database for a given user_id.
 
 `getLatestRecommendations(id)` -> Returns the latest recommendations found in the database.
 
