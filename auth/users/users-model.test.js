@@ -1,9 +1,5 @@
 const db = require('../../database/dbConfig');
 const USERS = require('./users-model');
-const RATINGS = require('../../uploading/models/letterboxd_tables/ratings');
-const REVIEWS = require('../../uploading/models/letterboxd_tables/reviews');
-const WATCHED = require('../../uploading/models/letterboxd_tables/watched');
-const WATCHLIST = require('../../uploading/models/letterboxd_tables/watch_list');
 
 describe('users-model', function() {
     describe('test environment', function() {
