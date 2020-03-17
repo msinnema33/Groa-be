@@ -42,8 +42,6 @@ describe('users-model', function() {
             expect(user.id).toBe(3)
         });
     });
-    describe('getUserRecommendations(id)', function() {
-    });
     describe('findUsers()', function() {
         it('returns a list of all users and their id', async function() {
             await db.seed.run();
