@@ -78,6 +78,7 @@ function getUserRecommendations(id) {
       "r.recommendation_json",
     )
     .where("r.user_id", id)
+    .orderBy("r.date", "desc")
     .first();
 }
 
