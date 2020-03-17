@@ -37,6 +37,40 @@ function findUsers() {
     .select("user_name", "id")
 }
 
+async function getUserData(user_id) {
+  let user = await getUserById(user_id)
+  .select("id", "user_name")
+  await db("user_letterboxd_ratings")
+  .where("user_id", user_id)
+  .then(ratings => {
+    user = {
+      ...user, ratings
+    }
+  })
+  await db("user_letterboxd_reviews")
+  .where("user_id", user_id)
+  .then(reviews => {
+    user = {
+      ...user, reviews
+    }
+  })
+  await db("user_letterboxd_watched")
+  .where("user_id", user_id)
+  .then(watched => {
+    user = {
+      ...user, watched
+    }
+  })
+  await db("user_letterboxd_watchlist")
+  .where("user_id", user_id)
+  .then(watchlist => {
+    user = {
+      ...user, watchlist
+    }
+  })
+  return user;
+};
+
 function getUserRecommendations(id) {
   return db("recommendations as r")
     .select(

@@ -1,7 +1,7 @@
 const db = require("../../../database/dbConfig.js");
 const prepTestDB = require("../../../helpers/prepTestDB.js");
 
-const { addRating, getRatingById } = require("./ratings.js");
+const { addRating, getRatingById, getRatings } = require("./ratings.js");
 
 beforeEach(prepTestDB);
 beforeEach(async () => await db("user_letterboxd_ratings").del());
@@ -41,5 +41,17 @@ describe("letterboxd ratings model", () => {
     expect(ratings).toHaveLength(2);
   });
 
+  it("should return the ratings for a given user", async () => {
+    await addRating(rating1);
+    await addRating(rating2);
+    let ratings = await getRatings(2);
+    expect(ratings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: "Aladdin" }),
+        expect.objectContaining({ name: "The Princess Bride" }),
+        expect.objectContaining({ user_id: 2 })
+      ])
+    )
+  });
   // will continue to add tests and model functions if more functionality is needed.
 });

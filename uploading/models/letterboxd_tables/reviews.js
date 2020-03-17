@@ -2,6 +2,7 @@ const db = require("../../../database/dbConfig.js");
 
 module.exports = { 
   addReview,
+  getReviews,
   getReviewById
 };
 
@@ -22,6 +23,11 @@ async function addReview(review) {
     }
   })
 }
+
+function getReviews(user_id) {
+  return db("user_letterboxd_reviews")
+    .where("user_id", user_id )
+};
 
 function getReviewById(id) {
   return db("user_letterboxd_reviews")
