@@ -39,7 +39,7 @@ function findUsers() {
 
 async function getUserData(user_id) {
   let user = await getUserById(user_id)
-  .select("id", "user_name")
+  .select("id as user_id", "user_name")
   await db("user_letterboxd_ratings")
   .where("user_id", user_id)
   .then(ratings => {
