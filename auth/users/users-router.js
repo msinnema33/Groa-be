@@ -82,13 +82,8 @@ router.get("/:id/recommendations", (req, res) => {
     if(response.data === "user_id not found" || response.data === "user_id not found in IMDB ratings or Letterboxd ratings"){
       res.status(404).json({ message: `Recommendations not available at this time, try adding your Letterboxd data. Received: ${response.data}` })
     }
-    Users.getUserRecommendations(id)
-    .then(recommendations => {
-      console.log(recommendations)
-      if (recommendations) {
-        res.status(200).json(recommendations)
-      }
-    })
+      console.log(response.data.result1)
+        res.status(200).json(response.data.result1)
   }) 
   .catch(error => {
     res.status(500).json({ error, errorMessage: "Could not retrieve any recommendations for your account."});
