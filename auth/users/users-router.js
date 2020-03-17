@@ -1,13 +1,11 @@
 const bcrypt = require("bcryptjs");
 const express = require("express");
-const jwt = require("jsonwebtoken");
-const axios = require("axios");
-const { signToken, authToken } = require("../authenticate-middleware.js");
+const { signToken } = require("../authenticate-middleware.js");
 const router = express.Router();
 
 const Users = require("./users-model");
 
-// REGISTER/LOGIN
+// REGISTER
 router.post("/register", (req, res) => {
   let userData = req.body;
   const hash = bcrypt.hashSync(userData.password, 8);
@@ -31,6 +29,7 @@ router.post("/register", (req, res) => {
     });
 });
 
+// LOGIN
 router.post("/login", (req, res) => {
   let { user_name, password } = req.body;
   Users.findBy( user_name )
@@ -50,51 +49,6 @@ router.post("/login", (req, res) => {
       console.log(error);
       res.status(500).json({ errorMessage: "Failed to retrieve credentials " });
     });
-});
-
-// router.get("/login/google", passport.authenticate("google", {
-//     scope: ['profile']
-// }));
-
-// router.get("/login/google/redirect", passport.authenticate("google"), (req, res) => {
-//     const token = generateToken(req.user);
-
-//     res.redirect(`localhost:5000/callback?jwt=${token}&user=${JSON.stringify(req.user)}`);
-
-// })
-
-// GET specific User's recommendations /api/users/:id/recommendations
-router.get("/:id/recommendations", (req, res) => {
-  const { id } = req.params;
-  console.log("id", id)
-  axios.post(
-  process.env.RECOMMENDER_URL, 
-  {
-    "user_id": id,
-    "number_of_recommendations": 50,
-    "good_threshold": 5,
-    "bad_threshold": 4,
-    "harshness": 1
-  }, 
-  {headers: {"Content-Type":"application/json"}}
-  )
-  .then(response => {
-    console.log(response)
-    if(response.data === "user_id not found" || response.data === "user_id not found in IMDB ratings or Letterboxd ratings"){
-      res.status(404).json({ message: `Recommendations not available at this time, try adding your Letterboxd data. Received: ${response.data}` })
-    }
-    Users.getUserRecommendations(id)
-    .then(recommendations => {
-      console.log(recommendations)
-      if (recommendations) {
-        res.status(200).json(recommendations)
-      }
-    })
-  }) 
-  .catch(error => {
-    console.log(error)
-    res.status(500).json({ error, errorMessage: "Could not retrieve any recommendations for your account."});
-  });
 });
 
 module.exports = router;

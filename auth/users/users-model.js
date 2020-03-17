@@ -5,9 +5,7 @@ module.exports = {
   findBy,
   getUserById,
   findUsers,
-  getUserData,
-  getUserRecommendations,
-  getMoviePoster
+  getUserData
 };
 
 function add(user) {
@@ -71,20 +69,3 @@ async function getUserData(user_id) {
   })
   return user;
 };
-
-function getUserRecommendations(id) {
-  return db("recommendations as r")
-    .select(
-      "r.recommendation_json",
-    )
-    .where("r.user_id", id)
-    .orderBy("r.date", "desc")
-    .first();
-}
-
-function getMoviePoster(id) {
-  return db("temp_reviews")
-  .select("poster_url")
-  .where("new_movie_id", id)
-  .first()
-}

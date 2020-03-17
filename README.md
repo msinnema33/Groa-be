@@ -29,7 +29,10 @@ Express
 | POST    | `/api/users/register` |  | Creates a new user. |
 | POST   | `/api/users/login` |  | Logs in an existing user. |
 | POST   | `/api/users/:id/uploading` |  | Uploads zip file from Letterboxd, unzips, parses and cleans each file and adds them to their respective tables in the database. If a movie with the same letterboxd_uri exists on the users account it will update variable information in place. |
-| GET   | `/api/users/:id/recommendations` |  | Returns recommendations based on user ratings. Returns results from the database, if none found will POST the user_id to the data science recommendation endpoint and then return the newly added recommendations or a prompt to add more reviews.|
+| GET   | `/api/users/:id/recommendations` |  | POSTs the user_id to the data science recommendation endpoint and then returns the newly added recommendations from the database or a prompt to add more reviews.|
+| GET   | `/api/users/:id/recommended` |  | Returns the latest recommendation from the database.|
+| GET   | `/api/users/:id/recommendation-history` |  | Returns an array of all recommendations found in the database.|
+
 
 
 # Data Model
@@ -165,7 +168,9 @@ Express
 
 `addToWatched()` -> Takes watched.csv file from zip upload and adds to user_letterboxd_watched.
 
-`getUserRecommendations(id)` -> Returns recommendations based on user ratings. Returns results from the database, if none found will POST the user_id to the data science recommendation endpoint and then return the newly added recommendations or a prompt to add more reviews.
+`getLatestRecommendations(id)` -> Returns the latest recommendations found in the database.
+
+`getAllRecommendations(id)` -> Returns all recommendatios associated with the users account.
 
 
 ## Environment Variables
