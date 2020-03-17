@@ -18,20 +18,12 @@ describe('Recommendation router', function() {
     afterEach(async function() {
         await db.raw('TRUNCATE user_letterboxd_ratings RESTART IDENTITY CASCADE');
     })
-    describe('GET /api/users/:id/recommendations', function() {
-        it('should return recommendations for a given user', async function() {
-            await db.seed.run();
-            await request(server)
-                .get('/api/users/3/recommendations')
-                .expect(500)
-        })
-    })
     describe('GET /api/users/:id/recommended', function() {
         it('should return recommendations for a given user', async function() {
             await db.seed.run();
             await request(server)
                 .get('/api/users/3/recommended')
-                .expect(500)
+                .expect(200)
         })
     })
     describe('GET /api/users/:id/recommendation-history', function() {
@@ -39,7 +31,7 @@ describe('Recommendation router', function() {
             await db.seed.run();
             await request(server)
                 .get('/api/users/3/recommendation-history')
-                .expect(500)
+                .expect(200)
         })
     })
 });

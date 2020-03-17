@@ -21,13 +21,11 @@ router.get("/:id/recommendations", (req, res) => {
     {headers: {"Content-Type":"application/json"}}
     )
     .then(response => {
-      console.log(response.data)
       if(response.data === "user_id not found" || response.data === "user_id not found in IMDB ratings or Letterboxd ratings"){
         res.status(404).json({ message: `Recommendations not available at this time, try adding your Letterboxd data. Received: ${response.data}` })
       }
       Recommendations.getLatestRecommendations(id)
       .then(recommendations => {
-        console.log(recommendations)
         if (recommendations) {
           res.status(200).json(recommendations)
         }
@@ -42,10 +40,8 @@ router.get("/:id/recommendations", (req, res) => {
   // LATEST RECOMMENDED REQUEST
   router.get("/:id/recommended", (req, res) => {
     const { id } = req.params;
-    console.log(id)
     Recommendations.getLatestRecommendations(id)
     .then(recommendations => {
-      console.log(recommendations)
       if (recommendations) {
         res.status(200).json(recommendations)
       }
@@ -59,11 +55,9 @@ router.get("/:id/recommendations", (req, res) => {
   // GET ALL PAST RECOMMENDATIONS
   router.get("/:id/recommendation-history", (req, res) => {
     const { id } = req.params;
-    console.log(`user_id: "${id}"`)
 
     Recommendations.getAllRecommendations(id)
     .then(recommendations => {
-      console.log(recommendations)
       if (recommendations) {
         res.status(200).json(recommendations)
       }
