@@ -6,12 +6,12 @@ module.exports = {
 
 async function findMovie(searchTerm) {
     const movies = await db('imdb_movies')
-        .select('movie_id as id','primary_title as title', 'start_year as year', 'runtime_minutes as runtime', 'genres')
+        .select('movie_id as id','primary_title as title', 'start_year as year', 'runtime_minutes as runtime', 'genres', 'poster_url')
 
     const movies2 = await movies.filter(post => 
         searchTerm !== '' ? post.title.toLowerCase().includes(searchTerm.toLowerCase()) : true).map((x, index) =>  {
             if( index < 100) {
-                return {Title: x.title, Year: x.year, Runtime: x.runtime, Genres: x.genres}
+                return {Title: x.title, Year: x.year, Runtime: x.runtime, Genres: x.genres, Poster: x.poster_url}
             }
         })
     
