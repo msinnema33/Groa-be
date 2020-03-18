@@ -5,10 +5,10 @@ const prepTestDB = require("../helpers/prepTestDB.js");
 const testHelpers = require("../utils/testingHelpers.js");
 
 beforeEach(function() {
-  prepTestDB();
   testHelpers.prepTestingDB("users");
+  prepTestDB();
 });
-afterEach(testHelpers.truncateTable("user_groa_ratings"));
+afterEach(() => testHelpers.truncateTable("user_groa_ratings"));
 
 describe("POST /users/:user_id/add-movie-rating", () => {
   it("adds a new movie rating and gives a success message", async () => {
