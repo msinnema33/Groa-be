@@ -1,10 +1,13 @@
 const db = require("../../../database/dbConfig.js");
-const prepTestDB = require("../../../helpers/prepTestDB.js");
+const { prepTestingDB } = require("../../../helpers/prepTestDB.js");
 
 const { addToWatched, getWatched, getWatchedById } = require("./watched.js");
 
-beforeEach(prepTestDB);
-beforeEach(async () => await db("user_letterboxd_watched").del());
+beforeAll(async() => {
+  prepTestingDB("user_letterboxd_ratings")
+  prepTestingDB("users")
+  await db.seed.run({ specific: '001-users.js' })
+});
 
 const watched1 = {
   date: new Date("2012-09-20" + "Z"),

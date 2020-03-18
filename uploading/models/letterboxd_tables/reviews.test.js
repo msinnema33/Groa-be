@@ -1,10 +1,13 @@
 const db = require("../../../database/dbConfig.js");
-const prepTestDB = require("../../../helpers/prepTestDB.js");
+const { prepTestingDB } = require("../../../helpers/prepTestDB.js");
 
 const { addReview, getReviews, getReviewById } = require("./reviews.js");
 
-beforeEach(prepTestDB);
-beforeEach(async () => await db("user_letterboxd_reviews").del());
+beforeAll(async() => {
+  prepTestingDB("user_letterboxd_ratings")
+  prepTestingDB("users")
+  await db.seed.run({ specific: '001-users.js' })
+});
 
 const review1 = {
   date: new Date("2012-09-20" + "Z"),
@@ -36,7 +39,7 @@ const review2 = {
 };
 
 describe("letterboxd reviews model", () => {
-  it("should insert the provided rating into the db", async () => {
+  it("should insert the provided reviews into the db", async () => {
     await addReview(review1);
     let review = await getReviewById(1);
     expect(review.name).toBe("Reservoir Dogs");
@@ -53,7 +56,7 @@ describe("letterboxd reviews model", () => {
     expect(reviews).toHaveLength(2);
   });
 
-  it("should return the ratings for a given user", async () => {
+  it("should return the reviews for a given user", async () => {
     await addReview(review1);
     await addReview(review2);
     let ratings = await getReviews(2);
