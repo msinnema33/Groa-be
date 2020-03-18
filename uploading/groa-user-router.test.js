@@ -1,19 +1,19 @@
+const db = require("../database/dbConfig.js");
 const request = require("supertest");
 const server = require("../api/server.js");
 
-const prepTestDB = require("../helpers/prepTestDB.js");
-const testHelpers = require("../utils/testingHelpers.js");
-
-beforeEach(function() {
-  testHelpers.prepTestingDB("users");
-  prepTestDB();
+beforeEach(async function() {
+  await db.raw("TRUNCATE users RESTART IDENTITY CASCADE");
 });
-afterEach(() => testHelpers.truncateTable("user_groa_ratings"));
+afterEach(async function() {
+  await db.raw("TRUNCATE user_letterboxd_ratings RESTART IDENTITY CASCADE");
+});
 
 describe("POST /users/:user_id/add-movie-rating", () => {
   it("adds a new movie rating and gives a success message", async () => {
+    await db.seed.run();
     const res = await request(server)
-      .post("/users/1/add-movie-rating")
+      .post("/api/users/1/add-movie-rating")
       .send({
         name: "American Psycho",
         year: 2000,
@@ -21,6 +21,6 @@ describe("POST /users/:user_id/add-movie-rating", () => {
       });
 
     expect(res.status).toBe(201);
-    expect(res.body.message).toBe("Success");
+    expect(res.body.message).toBe("Success!");
   });
 });
