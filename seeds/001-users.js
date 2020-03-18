@@ -1,8 +1,8 @@
+const { truncateTable } = require("../helpers/prepTestDB");
 const bcrypt = require("bcryptjs");
 
 exports.seed = function(knex) {
-  return knex("users")
-    .del()
+  return truncateTable("users")
     .then(function() {
       // Inserts seed entries
       return knex("users").insert([

@@ -1,7 +1,8 @@
+const { truncateTable } = require("../helpers/prepTestDB");
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('user_letterboxd_reviews').del()
+  return truncateTable('user_letterboxd_reviews')
     .then(function () {
       // Inserts seed entries
       return knex('user_letterboxd_reviews').insert([
