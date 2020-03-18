@@ -11,7 +11,7 @@ async function findMovie(searchTerm) {
     const movies2 = await movies.filter(post => 
         searchTerm !== '' ? post.title.toLowerCase().includes(searchTerm.toLowerCase()) : true).map((x, index) =>  {
             if( index < 100) {
-                return {Title: x.title}
+                return {Title: x.title, Year: x.year, Runtime: x.runtime, Genres: x.genres}
             }
         })
     
