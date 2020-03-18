@@ -5,8 +5,8 @@ const Movies = require("./movies-model");
 
 
 router.get("/movies", (req, res) => {
-  const {searchTerm} = req.body
-   Movies.findMovie(searchTerm)
+  const {search} = req.body
+   Movies.findMovie(search)
       .then(movies => {
         res.status(200).json(movies);
     })
