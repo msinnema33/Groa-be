@@ -4,7 +4,7 @@ const router = express.Router();
 const Movies = require("./movies-model");
 
 
-router.get("/movies", (req, res) => {
+router.post("/movies", (req, res) => {
   const {search} = req.body
    Movies.findMovie(search)
       .then(movies => {
