@@ -4,7 +4,7 @@
   "description": "Lambda Labs Groa",
   "apidoc": {
     "title": "Groa Web API Documentation",
-    "url": "to be determined"
+    "url": "https://api.groa.us/docs"
   },
   "main": "index.js",
   "scripts": {

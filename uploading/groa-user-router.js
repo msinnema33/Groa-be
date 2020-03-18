@@ -7,7 +7,7 @@ const { addRating } = require("./models/user_groa_tables/ratings.js");
 const validateRatingBody = require("./middleware/validateRatingBody.js");
 
 /**
- * @api {post} users/:user_id/add-movie-rating Rate a movie
+ * @api {post} /users/:user_id/add-movie-rating
  * @apiName Rate a Movie
  * @apiGroup Movies
  *
@@ -21,6 +21,7 @@ const validateRatingBody = require("./middleware/validateRatingBody.js");
  *    message: "Success"
  *  }
  *
+ * @apiError MissingBodyReqs The <code>req.body.param</code> was not found.
  * @apiErrorExample {json} Error-Response:
  *  HTTP/1.1 400
  *  {
