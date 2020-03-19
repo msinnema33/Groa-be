@@ -5,8 +5,8 @@ const Movies = require("./movies-model");
 
 
 router.post("/movies", (req, res) => {
-  const {search} = req.body
-   Movies.findMovie(search)
+  const {search, submit, genres, year} = req.body
+   Movies.findMovie(search, submit, genres, year)
       .then(movies => {
         res.status(200).json(movies);
     })
