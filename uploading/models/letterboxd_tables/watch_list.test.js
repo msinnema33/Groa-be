@@ -1,10 +1,13 @@
 const db = require("../../../database/dbConfig.js");
-const prepTestDB = require("../../../helpers/prepTestDB.js");
+const { prepTestingDB } = require("../../../helpers/prepTestDB.js");
 
-const { addToWatchList, getListItemById } = require("./watch_list.js");
+const { addToWatchList, getWatchlist, getListItemById } = require("./watch_list.js");
 
-beforeEach(prepTestDB);
-beforeEach(async () => await db("user_letterboxd_watchlist").del());
+beforeAll(async() => {
+  prepTestingDB("user_letterboxd_ratings")
+  prepTestingDB("users")
+  await db.seed.run({ specific: '001-users.js' })
+});
 
 const watch_list1 = {
   date: new Date("2012-09-20" + "Z"),
@@ -35,6 +38,19 @@ describe("letterboxd watch_list model", () => {
 
     let watchList = await db("user_letterboxd_watchlist");
     expect(watchList).toHaveLength(2);
+  });
+
+  it("should return the watchlist for a given user", async () => {
+    await addToWatchList(watch_list1);
+    await addToWatchList(watch_list2);
+    let watchlist = await getWatchlist(2);
+    expect(watchlist).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: "Shame" }),
+        expect.objectContaining({ name: "Moneyball" }),
+        expect.objectContaining({ user_id: 2 })
+      ])
+    )
   });
   // will continue to add tests and model functions if more functionality is needed.
 });
