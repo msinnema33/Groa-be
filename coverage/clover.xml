@@ -1,52 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1584655301570" clover="3.2.0">
-  <project timestamp="1584655301570" name="All files">
-    <metrics statements="34" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="11" coveredmethods="2" elements="45" coveredelements="21" complexity="0" loc="34" ncloc="34" packages="2" files="2" classes="2"/>
-    <package name="api">
-      <metrics statements="16" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="server.js" path="/Users/bgingrich/Desktop/Groa-be/api/server.js">
-        <metrics statements="16" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
-      </file>
-    </package>
-    <package name="auth.users">
-      <metrics statements="18" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="2"/>
-      <file name="users-model.js" path="/Users/bgingrich/Desktop/Groa-be/auth/users/users-model.js">
-        <metrics statements="18" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="2"/>
-        <line num="1" count="3" type="stmt"/>
-        <line num="3" count="3" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="23" count="4" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="45" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="63" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="70" count="0" type="stmt"/>
-      </file>
-    </package>
+<coverage generated="1584657276023" clover="3.2.0">
+  <project timestamp="1584657276023" name="All files">
+    <metrics statements="9" coveredstatements="2" conditionals="13" coveredconditionals="0" methods="4" coveredmethods="0" elements="26" coveredelements="2" complexity="0" loc="9" ncloc="9" packages="1" files="1" classes="1"/>
+    <file name="movies-model.js" path="/Users/bgingrich/Desktop/Groa-be/movies/movies-model.js">
+      <metrics statements="9" coveredstatements="2" conditionals="13" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="3" count="2" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+      <line num="11" count="0" type="stmt"/>
+      <line num="12" count="0" type="cond" truecount="0" falsecount="7"/>
+      <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="14" count="0" type="stmt"/>
+      <line num="18" count="0" type="cond" truecount="0" falsecount="4"/>
+      <line num="19" count="0" type="stmt"/>
+    </file>
   </project>
 </coverage>
