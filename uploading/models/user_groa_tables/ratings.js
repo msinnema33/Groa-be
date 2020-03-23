@@ -6,7 +6,7 @@ module.exports = {
 };
 
 /**
- * Inserts a rating to the database for the Groa site
+ * Inserts or updates a rating to the database for the Groa site
  * @param {object} rating - date, name, year, rating, user_id
  * @returns {ratedMovie}
  */
