@@ -11,8 +11,30 @@ module.exports = {
  * @returns {ratedMovie}
  */
 async function addRating(rating) {
-  await db("user_groa_ratings").insert(rating);
-  return { message: "Success!" };
+  const ratings = await db("user_groa_ratings")
+    .select('*')
+    .where("name", rating.name)
+    .andWhere("user_id", rating.user_id);
+
+  if (ratings.length === 0) {
+    const ids = await db("user_groa_ratings")
+      .insert(rating, "id")
+
+    const [id] = ids;
+    const added = await getRatingById(id);
+    return added;      
+
+  } else {
+    const ids = await db("user_groa_ratings")
+      .where("name", rating.name)
+      .andWhere("user_id", rating.user_id)
+      .update("rating", rating.rating, "id");
+  
+    const [id] = ids;
+    const updated = await getRatingById(id);
+    return updated;  
+  }  
+  
 }
 
 /**
