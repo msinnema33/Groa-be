@@ -18,7 +18,14 @@ const validateRatingBody = require("./middleware/validateRatingBody.js");
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 201 Created
  *  {
- *    message: "Success"
+ *    rated: {
+ *      id: INTEGER
+ *      date: DATE TIMESTAMP
+ *      name: STRING
+ *      year: INTEGER
+ *      rating: INTEGER FLOAT
+ *      user_id: INTEGER
+ *     }
  *  }
  *
  * @apiError MissingBodyReqs The <code>req.body.param</code> was not found.

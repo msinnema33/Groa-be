@@ -36,7 +36,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 201 Created\n{\n  message: \"Success\"\n}",
+          "content": "HTTP/1.1 201 Created\n{\n  body: \"{\"id\": 6116, \"date\": \"2020-03-24T04:00:00.000Z\", \"name:\":\"The Decline of the American Empire\", \"year\": 1986, \"rating\": 4.5, \"user_id\": 4,\n}",
           "type": "json"
         }
       ]
