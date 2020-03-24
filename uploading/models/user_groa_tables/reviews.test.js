@@ -4,7 +4,7 @@ const { prepTestingDB } = require("../../../helpers/prepTestDB.js");
 const { addReview, getReviews, getReviewById } = require("./reviews.js");
 
 beforeAll(async() => {
-  prepTestingDB("user_letterboxd_ratings")
+  prepTestingDB("user_groa_reviews")
   prepTestingDB("users")
   await db.seed.run({ specific: '001-users.js' })
 });
@@ -15,7 +15,6 @@ const review1 = {
   year: Number("1992"),
   rating: Number("3.5"),
   user_id: Number(2),
-  letterboxd_uri: "https://letterboxd.com/tabula_rasta/film/reservoir-dogs/",
   rewatch: "",
   review:
     "No film before or since has embraced nihilism so willingly and made you enjoy it so much (hopefully, to some shame.) I'm not convinced there is any point to this movie but to be a movie, and that job it does quite well and provides a little context to Tarantino's later films.",
@@ -28,8 +27,6 @@ const review2 = {
   name: "Singin' in the Rain",
   year: Number("1952"),
   rating: Number("3.5"),
-  letterboxd_uri:
-    String("https://letterboxd.com/tabula_rasta/film/singin-in-the-rain/"),
   rewatch: "",
   review:
     "The best of comedy, joy and wonder, distilled to perfection. It took me half an hour to wipe the smile off my face; this is a must-see classic.",
@@ -52,7 +49,7 @@ describe("letterboxd reviews model", () => {
     expect(review.year).toBe(1952);
     expect(review.rating).toBe(3.5);
 
-    let reviews = await db("user_letterboxd_reviews");
+    let reviews = await db("user_groa_reviews");
     expect(reviews).toHaveLength(2);
   });
 

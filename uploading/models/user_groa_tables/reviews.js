@@ -7,17 +7,19 @@ module.exports = {
 };
 
 async function addReview(review) {
-  await db("user_letterboxd_reviews")
+  await db("user_groa_reviews")
   .select('*')
-  .where("letterboxd_uri", review.letterboxd_uri)
+  .where("name", review.name)
+  .andWhere("year", review.year)
   .andWhere("user_id", review.user_id)
   .then(reviews => {
     if(reviews.length === 0) {
-      return db("user_letterboxd_reviews")
+      return db("user_groa_reviews")
       .insert(review, "id")
     } else {
-      return db("user_letterboxd_reviews")
-      .where("letterboxd_uri", review.letterboxd_uri)
+      return db("user_groa_reviews")
+      .where("name", review.name)
+      .andWhere("year", review.year)
       .andWhere("user_id", review.user_id)
       .update("review", review.review, "id")
     }
@@ -25,12 +27,12 @@ async function addReview(review) {
 }
 
 function getReviews(user_id) {
-  return db("user_letterboxd_reviews")
+  return db("user_groa_reviews")
     .where("user_id", user_id )
 };
 
 function getReviewById(id) {
-  return db("user_letterboxd_reviews")
+  return db("user_groa_reviews")
     .where("id", id )
     .first();
 };

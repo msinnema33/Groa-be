@@ -4,7 +4,7 @@ const { prepTestingDB } = require("../../../helpers/prepTestDB.js");
 const { addRating, getRatingById, getRatings } = require("./ratings.js");
 
 beforeAll(async() => {
-  prepTestingDB("user_letterboxd_ratings")
+  prepTestingDB("user_groa_ratings")
   prepTestingDB("users")
   await db.seed.run({ specific: '001-users.js' })
 });
@@ -14,7 +14,6 @@ const rating1 = {
   date: new Date("2020-02-14" + "Z"),
   name: "The Princess Bride",
   year: Number("1987"),
-  letterboxd_uri: "https://letterboxd.com/film/the-princess-bride/",
   rating: Number("3.5"),
   user_id: 2
 };
@@ -22,7 +21,6 @@ const rating2 = {
   date: new Date("2020-02-14" + "Z"),
   name: "Aladdin",
   year: Number(1992),
-  letterboxd_uri: "https://letterboxd.com/film/aladdin/",
   rating: Number("4"),
   user_id: 2
 };
@@ -41,7 +39,7 @@ describe("letterboxd ratings model", () => {
     expect(rating.year).toBe(1992);
     expect(rating.rating).toBe(4);
 
-    let ratings = await db("user_letterboxd_ratings");
+    let ratings = await db("user_groa_ratings");
     expect(ratings).toHaveLength(2);
   });
 

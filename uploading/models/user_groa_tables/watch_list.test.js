@@ -4,7 +4,7 @@ const { prepTestingDB } = require("../../../helpers/prepTestDB.js");
 const { addToWatchList, getWatchlist, getListItemById } = require("./watch_list.js");
 
 beforeAll(async() => {
-  prepTestingDB("user_letterboxd_ratings")
+  prepTestingDB("user_groa_ratings")
   prepTestingDB("users")
   await db.seed.run({ specific: '001-users.js' })
 });
@@ -13,14 +13,12 @@ const watch_list1 = {
   date: new Date("2012-09-20" + "Z"),
   name: "Shame",
   year: Number("2011"),
-  letterboxd_uri: String("https://letterboxd.com/film/shame-2011/"),
   user_id: Number(2)
 };
 const watch_list2 = {
   date: new Date("2012-09-20" + "Z"),
   name: "Moneyball",
   year: Number(2011),
-  letterboxd_uri: String("https://letterboxd.com/film/moneyball/"),
   user_id: Number(2)
 };
 
@@ -36,7 +34,7 @@ describe("letterboxd watch_list model", () => {
     expect(watch_list.name).toBe("Moneyball");
     expect(watch_list.year).toBe(2011);
 
-    let watchList = await db("user_letterboxd_watchlist");
+    let watchList = await db("user_groa_watchlist");
     expect(watchList).toHaveLength(2);
   });
 

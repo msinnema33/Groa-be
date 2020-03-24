@@ -39,14 +39,14 @@ function findUsers() {
 async function getUserData(id) {
   let user = await getUserById(id)
   .select("id as user_id", "user_name")
-  await db("user_letterboxd_ratings")
+  await db("user_groa_ratings")
   .where("user_id", id)
   .then(ratings => {
     user = {
       ...user, ratings
     }
   })
-  await db("user_letterboxd_reviews")
+  await db("user_groa_reviews")
   .where("user_id", id)
   .then(reviews => {
     user = {
@@ -60,7 +60,7 @@ async function getUserData(id) {
       ...user, watched
     }
   })
-  await db("user_letterboxd_watchlist")
+  await db("user_groa_watchlist")
   .where("user_id", id)
   .then(watchlist => {
     user = {

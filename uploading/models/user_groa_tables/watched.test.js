@@ -4,7 +4,7 @@ const { prepTestingDB } = require("../../../helpers/prepTestDB.js");
 const { addToWatched, getWatched, getWatchedById } = require("./watched.js");
 
 beforeAll(async() => {
-  prepTestingDB("user_letterboxd_ratings")
+  prepTestingDB("user_groa_ratings")
   prepTestingDB("users")
   await db.seed.run({ specific: '001-users.js' })
 });

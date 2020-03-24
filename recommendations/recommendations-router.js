@@ -8,7 +8,6 @@ const Recommendations = require("./recommendations-model");
 // NEW RECOMMENDATIONS REQUEST
 router.get("/:id/recommendations", (req, res) => {
     const { id } = req.params;
-    console.log(`user_id: "${id}"`)
     axios.post(
     process.env.RECOMMENDER_URL, 
     {

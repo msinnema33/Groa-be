@@ -21,6 +21,6 @@ describe("POST /users/:user_id/add-movie-rating", () => {
       });
 
     expect(res.status).toBe(201);
-    expect(res.body.message).toBe("Success!");
+    expect(res.body.name).toBe("American Psycho");
   });
 });
