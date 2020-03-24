@@ -28,7 +28,8 @@ Express
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
 | POST    | `/api/users/register` |  | Creates a new user. |
 | POST   | `/api/users/login` |  | Logs in an existing user. |
-| POST   | `/api/users/:id/uploading` |  | Uploads zip file from Letterboxd, unzips, parses and cleans each file and adds them to their respective tables in the database. If a movie with the same letterboxd_uri exists on the users account it will update variable information in place. |
+| POST   | `/api/users/:id/uploading` |  | Uploads zip file from Letterboxd, unzips, parses and cleans each file and adds them to their respective tables in the database. If a movie with the same name and year exists on the users account it will update variable information in place. |
+| POST   | `/api/users/:id/add-movie-rating` |  | Adds a rating object to the groa_users_ratings table, If a movie with the same name and year exists on the users account it will update the rating information in place. |
 | GET   | `/api/users/:id/recommendations` |  | POSTs the user_id to the data science recommendation endpoint and then returns the newly added recommendations from the database or a prompt to add more reviews.|
 | GET   | `/api/users/:id/recommended` |  | Returns the latest recommendation from the database.|
 | GET   | `/api/users/:id/recommendation-history` |  | Returns an array of all recommendations found in the database.|
@@ -217,6 +218,21 @@ Express
 ```
 ---
 
+#### RATING
+
+```
+
+{
+  id: INTEGER
+  date: DATE TIMESTAMP
+  name: STRING
+  year: INTEGER
+  rating: INTEGER FLOAT
+  user_id: INTEGER
+}
+```
+---
+
 ## Actions
 
 `add()` -> Creates and returns a new user.
@@ -227,17 +243,17 @@ Express
 
 `findUsers()` -> Return all users and their corresponding ID.
 
-`findRatings()` -> Returns the user_letterboxd_ratings for the logged in user.
+`findRatings()` -> Returns the user_groa_ratings for the logged in user.
 
-`addRating()` -> Takes ratings.csv file from zip upload and adds to user_letterboxd_ratings.
+`addRating()` -> Takes ratings.csv file or rating object from zip upload and adds to user_groa_ratings,
 
-`addReview()` -> Takes reviews.csv file from zip upload and adds to user_letterboxd_reviews.
+`addReview()` -> Takes reviews.csv file from zip upload and adds to user_groa_reviews.
 
-`addToWatchList()` -> Takes watchlist.csv file from zip upload and adds to user_letterboxd_watchlist.
+`addToWatchList()` -> Takes watchlist.csv file from zip upload and adds to user_groa_watchlist.
 
 `addToWatched()` -> Takes watched.csv file from zip upload and adds to user_letterboxd_watched.
 
-`getUserData(id)` -> Returns all user_letterboxd_ratings, _reviews, _watched, and _watchlist items found in the database for a given user_id.
+`getUserData(id)` -> Returns all user_groa_ratings, _reviews, and _watchlist, and user_letteroxd_watched items found in the database for a given user_id.
 
 `getLatestRecommendations(id)` -> Returns the latest recommendations found in the database.
 
