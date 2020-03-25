@@ -6,6 +6,7 @@ const userRouter = require("../auth/users/users-router.js");
 const uploadingRouter = require("../uploading/uploading-router.js");
 const recommendationsRouter = require("../recommendations/recommendations-router.js");
 const groaUserRouter = require("../uploading/groa-user-router.js");
+const groaWatchListRouter = require("../uploading/groa-watchlist-router.js");
 
 const server = express();
 
@@ -23,7 +24,8 @@ server.use(
   userRouter,
   uploadingRouter,
   recommendationsRouter,
-  groaUserRouter
+  groaUserRouter,
+  groaWatchListRouter
 );
 
 server.get("/", (req, res) => {
