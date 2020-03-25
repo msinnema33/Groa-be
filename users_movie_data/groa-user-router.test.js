@@ -24,3 +24,12 @@ describe("POST /users/:user_id/add-movie-rating", () => {
     expect(res.body.name).toBe("American Psycho");
   });
 });
+
+describe("GET /users/:user_id/get-ratings", () => {
+  it("gets all users rated movies with posters", async () => {
+    await db.seed.run();
+    const res = await request(server).get("/api/users/3/get-ratings");
+
+    expect(res.status).toBe(200);
+  });
+});
