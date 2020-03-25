@@ -1,7 +1,5 @@
 const db = require("../../../database/dbConfig.js");
 
-const { getPosterToJoinBy } = require("../imdb_movies.js");
-
 module.exports = {
   addRating,
   getRatingById,
