@@ -16,7 +16,7 @@ async function findMovie(searchTerm, submit, genres2, year2) {
         })
     
         if (searchTerm.length >= 4 || submit === true) {
-            return movies2.filter(x => x != null && x.average_rating != null)}
+            return movies2.filter(x => x != null || x.Average_Rating != null)}
 
 } 
 
