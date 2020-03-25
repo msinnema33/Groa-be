@@ -14,10 +14,10 @@ router.use(
 );
 
 // model functions
-const { addRating } = require("./models/letterboxd_tables/ratings.js");
-const { addReview } = require("./models/letterboxd_tables/reviews.js");
-const { addToWatched } = require("./models/letterboxd_tables/watched.js");
-const { addToWatchList } = require("./models/letterboxd_tables/watch_list.js");
+const { addRating } = require("./models/user_groa_tables/ratings.js");
+const { addReview } = require("./models/user_groa_tables/reviews.js");
+const { addToWatched } = require("./models/user_groa_tables/watched.js");
+const { addToWatchList } = require("./models/user_groa_tables/watch_list.js");
 const { getUserData } = require("../auth/users/users-model");
 
 router.post("/:user_id/uploading", (req, res) => {
@@ -55,7 +55,7 @@ router.post("/:user_id/uploading", (req, res) => {
               date: new Date(data.Date + "Z"),
               name: data.Name,
               year: Number(data.Year),
-              letterboxd_uri: data["Letterboxd URI"],
+              // letterboxd_uri: data["Letterboxd URI"],
               rating: data.Rating !== "" ? data.Rating * 1 : undefined, //
               user_id: Number(req.params.user_id)
             };
@@ -72,7 +72,7 @@ router.post("/:user_id/uploading", (req, res) => {
                 let cleanedReview = removeNewLines(data.Review);
                 parsed = {
                   ...parsed,
-                  letterboxd_uri: data["Letterboxd URI"],
+                  // letterboxd_uri: data["Letterboxd URI"],
                   rewatch: data.Rewatch,
                   review: cleanedReview,
                   tags: data.Tags,
@@ -99,7 +99,7 @@ router.post("/:user_id/uploading", (req, res) => {
                   date: new Date(data.Date + "Z"),
                   name: data.Name,
                   year: Number(data.Year),
-                  letterboxd_uri: data["Letterboxd URI"],
+                  // letterboxd_uri: data["Letterboxd URI"],
                   user_id: Number(req.params.user_id)
                 };
                 addToWatchList(parsed)
