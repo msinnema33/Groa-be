@@ -60,7 +60,48 @@ router.post("/:user_id/add-movie-rating", validateRatingBody, (req, res) => {
     );
 });
 
-// get ratings
+/**
+ * @api {get} /users/:user_id/get-ratings
+ * @apiName Get Movie Ratings
+ * @apiGroup Movies
+ *
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 201 Created
+ * [
+ *   {
+ *     "id": 3999,
+ *     "date": "2020-03-17T05:00:00.000Z",
+ *     "name": "Lilo & Stitch",
+ *     "year": 2002,
+ *     "rating": 5,
+ *     "poster_url": "/tVaEulzowKhMhDvHNNYb9rNEZPB.jpg"
+ *   },
+ *   {
+ *     "id": 6117,
+ *     "date": "2020-03-24T05:00:00.000Z",
+ *     "name": "Some Like It Hot",
+ *     "year": 1959,
+ *     "rating": 3,
+ *     "poster_url": "/pxc9EFCMYkItESpqqrI783yl8Gh.jpg"
+ *   },
+ *   {
+ *     "id": 3998,
+ *     "date": "2020-03-17T05:00:00.000Z",
+ *     "name": "Ice Age",
+ *     "year": 2002,
+ *     "rating": 3.5,
+ *     "poster_url": "/zpaQwR0YViPd83bx1e559QyZ35i.jpg"
+ *   }
+ * ]
+ *
+ * @apiError MissingBodyReqs The <code>req.body.param</code> was not found.
+ * @apiErrorExample {json} Error-Response:
+ *  HTTP/1.1 400
+ *  {
+ *    message: "Please send a movie name with this request."
+ *  }
+ *
+ */
 router.get("/:user_id/get-ratings", (req, res) => {
   getRatings(req.params.user_id)
     .then(ratings => res.status(200).json(ratings))
