@@ -31,3 +31,20 @@ describe("GET /users/:user_id/get-watchlist", () => {
     expect(res.status).toBe(200);
   });
 });
+
+describe("/DELETE /:user_id/remove-from-watchlist/:watchlist_id", () => {
+  it("successfully deletes a movie from the watchlist returns 200 ok", async () => {
+    await request(server)
+      .post("/api/users/1/add-to-watchlist")
+      .send({
+        name: "American Psycho",
+        year: 2000
+      });
+
+    const res = await request(server).delete(
+      "/api/users/1/remove-from-watchlist/1"
+    );
+
+    expect(res.status).toBe(200);
+  });
+});

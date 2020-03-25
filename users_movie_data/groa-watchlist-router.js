@@ -3,7 +3,8 @@ const router = require("express").Router();
 // model functions
 const {
   addToWatchList,
-  getWatchlist
+  getWatchlist,
+  removeMovieFromWatchList
 } = require("./models/user_groa_tables/watch_list.js");
 
 router.post("/:user_id/add-to-watchlist", (req, res) => {
@@ -33,6 +34,19 @@ router.get("/:user_id/get-watchlist", (req, res) => {
     .catch(err =>
       res.status(500).json({
         message: "Something went wrong in gettings ratings.",
+        error: err,
+        errorMessage: err.message
+      })
+    );
+});
+
+router.delete("/:user_id/remove-from-watchlist/:watchlist_id", (req, res) => {
+  removeMovieFromWatchList(req.params.watchlist_id)
+    .then(response => res.status(200).json(response))
+    .catch(err =>
+      res.status(500).json({
+        message:
+          "Something went wrong in removing that movie from your watchlist.",
         error: err,
         errorMessage: err.message
       })

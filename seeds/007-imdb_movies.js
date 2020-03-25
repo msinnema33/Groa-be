@@ -13,6 +13,16 @@ exports.seed = function(knex) {
         primary_title: "The Princess Bride",
         year: 1987,
         poster_url: "/gpxjoE0yvRwIhFEJgNArtKtaN7S.jpg"
+      },
+      {
+        primary_title: "Shame",
+        year: 2011,
+        poster_url: "/mjKozYRuHc9j7SmiXmbVmCiAM0A.jpg"
+      },
+      {
+        primary_title: "Moneyball",
+        year: 2011,
+        poster_url: "/mjKozYRuHc9j7SmiXmbVmCiAM0A.jpg"
       }
     ]);
   });

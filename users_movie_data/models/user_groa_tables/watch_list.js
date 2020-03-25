@@ -1,6 +1,11 @@
 const db = require("../../../database/dbConfig.js");
 
-module.exports = { addToWatchList, getWatchlist, getListItemById };
+module.exports = {
+  addToWatchList,
+  getWatchlist,
+  getListItemById,
+  removeMovieFromWatchList
+};
 
 async function addToWatchList(movie) {
   await db("user_groa_watchlist")
@@ -38,4 +43,14 @@ function getListItemById(id) {
   return db("user_groa_watchlist")
     .where("id", id)
     .first();
+}
+
+function removeMovieFromWatchList(id) {
+  return getListItemById(id).then(() => {
+    return db("user_groa_watchlist")
+      .where({ id })
+      .del()
+      .then(() => "Success")
+      .catch(err => err);
+  });
 }

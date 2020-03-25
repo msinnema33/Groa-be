@@ -1,12 +1,17 @@
 const db = require("../../../database/dbConfig.js");
 const { prepTestingDB } = require("../../../helpers/prepTestDB.js");
 
-const { addToWatchList, getWatchlist, getListItemById } = require("./watch_list.js");
+const {
+  addToWatchList,
+  getWatchlist,
+  getListItemById
+} = require("./watch_list.js");
 
-beforeAll(async() => {
-  prepTestingDB("user_groa_ratings")
-  prepTestingDB("users")
-  await db.seed.run({ specific: '001-users.js' })
+beforeEach(async () => {
+  prepTestingDB("user_groa_watchlist");
+  prepTestingDB("users");
+  await db.seed.run({ specific: "001-users.js" });
+  await db.seed.run({ specific: "007-imdb_movies.js" });
 });
 
 const watch_list1 = {
@@ -48,7 +53,7 @@ describe("letterboxd watch_list model", () => {
         expect.objectContaining({ name: "Moneyball" }),
         expect.objectContaining({ user_id: 2 })
       ])
-    )
+    );
   });
   // will continue to add tests and model functions if more functionality is needed.
 });
