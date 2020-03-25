@@ -62,6 +62,7 @@ function getRatings(user_id) {
       "ur.name",
       "ur.year",
       "ur.rating",
+      "ur.user_id",
       "imdb_movies.poster_url"
     )
     .where("ur.user_id", user_id);
