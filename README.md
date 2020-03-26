@@ -30,9 +30,11 @@ Express
 | POST   | `/api/users/login` |  | Logs in an existing user. |
 | POST   | `/api/users/:id/uploading` |  | Uploads zip file from Letterboxd, unzips, parses and cleans each file and adds them to their respective tables in the database. If a movie with the same name and year exists on the users account it will update variable information in place. |
 | POST   | `/api/users/:id/add-movie-rating` |  | Adds a rating object to the groa_users_ratings table, If a movie with the same name and year exists on the users account it will update the rating information in place. |
+| POST   | `/api/users/movies` |  | Displays an array of movies using search terms. |
 | GET   | `/api/users/:id/recommendations` |  | POSTs the user_id to the data science recommendation endpoint and then returns the newly added recommendations from the database or a prompt to add more reviews.|
 | GET   | `/api/users/:id/recommended` |  | Returns the latest recommendation from the database.|
 | GET   | `/api/users/:id/recommendation-history` |  | Returns an array of all recommendations found in the database.|
+
 
 
 
@@ -257,7 +259,10 @@ Express
 
 `getLatestRecommendations(id)` -> Returns the latest recommendations found in the database.
 
-`getAllRecommendations(id)` -> Returns all recommendatios associated with the users account.
+`getAllRecommendations(id)` -> Returns all recommendations associated with the users account.
+
+`findMovie` -> Returns movies results for search and filtering.
+
 
 
 ## Environment Variables
