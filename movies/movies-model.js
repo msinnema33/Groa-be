@@ -6,8 +6,9 @@ module.exports = {
 
 async function findMovie(searchTerm, submit, genres2, year2) {
     const movies = await db('imdb_movies')
-        .select('movie_id as id','primary_title as title', 'start_year as year', 'runtime_minutes as runtime', 'genres', 'poster_url', 'average_rating')
+        .select('movie_id as id','primary_title as title', 'start_year as year', 'runtime_minutes as runtime', 'genres', 'poster_url', 'average_rating', 'num_votes')
         .orderBy('average_rating', 'desc')
+        .orderBy('num_votes', 'desc')
     if (searchTerm.length >= 4 || submit === true) {
     const movies2 = movies.filter(x => x.average_rating != null)
     const movies3 = await movies2.filter(post => 
