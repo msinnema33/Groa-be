@@ -27,7 +27,7 @@ async function addToWatchList(movie) {
  */
 function getWatchlist(user_id) {
   return db("user_groa_watchlist as wl")
-    .innerJoin("imdb_movies", "imdb_movies.primary_title", "wl.name")
+    .innerJoin("imdb_movies", {"imdb_movies.primary_title": "wl.name", "imdb_movies.start_year":"wl.year"})
     .select(
       "wl.id",
       "wl.date",
