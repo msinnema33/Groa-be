@@ -12,7 +12,7 @@ const validateRatingBody = require("./middleware/validateRatingBody.js");
 /**
  * @api {post} /users/:user_id/add-movie-rating
  * @apiName Rate a Movie
- * @apiGroup Movies
+ * @apiGroup Ratings
  *
  * @apiParam {string} name **Required** | Title of the movie you want to rate.
  * @apiParam {integer} year **Required** | The year the movie was made.
@@ -21,14 +21,12 @@ const validateRatingBody = require("./middleware/validateRatingBody.js");
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 201 Created
  *  {
- *    rated: {
- *      id: INTEGER
- *      date: DATE TIMESTAMP
- *      name: STRING
- *      year: INTEGER
- *      rating: INTEGER FLOAT
- *      user_id: INTEGER
- *     }
+ *    "id": 4006,
+ *    "date": "2020-03-17T05:00:00.000Z",
+ *    "name": "Young Frankenstein",
+ *    "year": 1974,
+ *    "rating": 4,
+ *    "user_id": 48485
  *  }
  *
  * @apiError MissingBodyReqs The <code>req.body.param</code> was not found.
@@ -63,7 +61,7 @@ router.post("/:user_id/add-movie-rating", validateRatingBody, (req, res) => {
 /**
  * @api {get} /users/:user_id/get-ratings
  * @apiName Get Movie Ratings
- * @apiGroup Movies
+ * @apiGroup Ratings
  *
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 201 Created

@@ -11,7 +11,7 @@
     "test": "cross-env DB_ENV=testing jest --watch --verbose --runInBand --collect-coverage",
     "start": "node index.js",
     "server": "nodemon .",
-    "docs": "apidoc -i . -e node_modules coverage database migrations seeds -o ./docs"
+    "docs": "apidoc -i ./ -e node_modules -o ./docs"
   },
   "jest": {
     "testEnvironment": "node"
