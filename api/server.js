@@ -21,11 +21,28 @@ server.use("/docs", express.static("./docs"));
 server.use(
   "/api/users",
   userRouter,
+  // these should all be protected routes
   uploadingRouter,
   recommendationsRouter,
   groaUserRouter
 );
 
+/**
+ * @api {get} /
+ * @apiName Test if Server is Running
+ * @apiGroup Server
+ *
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *
+ *  "Welcome to the Backend of Groa"
+ *
+ * @apiErrorExample {string} Error-Response:
+ *  HTTP/1.1 500
+ *
+ *  "Error: Couldn't connect to server"
+ *
+ */
 server.get("/", (req, res) => {
   res.status(200).json("Welcome to the Backend of Groa");
 });
