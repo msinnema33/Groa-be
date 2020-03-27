@@ -272,6 +272,8 @@ create a .env file that includes the following:
     *  JWT_SECRET 
     *  TOKEN_EXP
     
+The respective values for these variables can be found on the Elastic Beanstalk environment in Configuration > Software > Environment properties
+    
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
