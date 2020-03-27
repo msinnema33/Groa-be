@@ -266,12 +266,13 @@ In order for the app to function correctly, the user must set up their own envir
 
 create a .env file that includes the following:
     
-    *  DATABASE_URL
-    *  TESTING_DB_URL
-    *  RECOMMENDATION_URL
-    *  JWT_SECRET 
-    *  TOKEN_EXP
-    
+    *  DATABASE_URL - This is the url for thre Groa database needed to connect to our postgresQL on RDS 
+    *  TESTING_DB_URL - This is the local test databaase url, it can be changed to whatever you need for your local setup
+    *  RECOMMENDATION_URL - This is the url for the data science ratings recommender, needed for generating recommendations
+    *  RECOMMENDATION_URL_2 - This is the url for the data science reviews recommender, needed for generating recommendations
+    *  JWT_SECRET - The secret used to assign encode tokens for authentication
+    *  TOKEN_EXP - Variable in which the token expires, can be set to anything you like
+
 The respective values for these variables can be found on the Elastic Beanstalk environment in Configuration > Software > Environment properties
     
 ## Contributing
