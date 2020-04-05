@@ -266,11 +266,14 @@ In order for the app to function correctly, the user must set up their own envir
 
 create a .env file that includes the following:
     
-    *  DATABASE_URL=postgres://postgres:lambdaschoolgroa@groadb-dev.cbayt2opbptw.us-east-1.rds.amazonaws.com:5432/postgres
-    *  TESTING_DB_URL=postgres://@localhost:5432/postgres
-    *  RECOMMENDATION_URL=http://a13327d835de211ea92c80a488b922f7-342789911.us-east-1.elb.amazonaws.com/movie-recommender
-    *  JWT_SECRET 
-    *  TOKEN_EXP=8h
+    *  DATABASE_URL - This is the url for thre Groa database needed to connect to our postgresQL on RDS 
+    *  TESTING_DB_URL - This is the local test databaase url, it can be changed to whatever you need for your local setup
+    *  RECOMMENDATION_URL - This is the url for the data science ratings recommender, needed for generating recommendations
+    *  RECOMMENDATION_URL_2 - This is the url for the data science reviews recommender, needed for generating recommendations
+    *  JWT_SECRET - The secret used to assign encode tokens for authentication
+    *  TOKEN_EXP - Variable in which the token expires, can be set to anything you like
+
+The respective values for these variables can be found on the Elastic Beanstalk environment in Configuration > Software > Environment properties
     
 ## Contributing
 
@@ -310,5 +313,6 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/Lambda-School-Labs/Groa-fe/blob/master/README.md) for details on the front end of our project.
+see [Data Science](https://github.com/Lambda-School-Labs/Groa-ds/blob/master/README.md) for details on 
+the Data Science of our project.
