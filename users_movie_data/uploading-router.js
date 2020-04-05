@@ -18,9 +18,9 @@ const { addRating } = require("./models/user_groa_tables/ratings.js");
 const { addReview } = require("./models/user_groa_tables/reviews.js");
 const { addToWatched } = require("./models/user_groa_tables/watched.js");
 const { addToWatchList } = require("./models/user_groa_tables/watch_list.js");
-const { getUserData } = require("../auth/users/users-model");
+const { getUserById, getUserData } = require("../auth/users/users-model");
 
-router.post("/:user_id/uploading", (req, res) => {
+router.post("/:user_id/uploading", async (req, res) => {
   const tempFilePath = req.files.movies.tempFilePath;
 
   //https://www.npmjs.com/package/unzipper for docs on how to do this.
@@ -133,7 +133,8 @@ router.post("/:user_id/uploading", (req, res) => {
           entry.autodrain();
       }
     })
-    getUserData(req.params.user_id)
+    const user = await getUserById(req.params.user_id)
+    await getUserData(user.user_name)
     .then(user => {
       res.status(200).json(user)
     })

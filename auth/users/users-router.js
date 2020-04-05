@@ -74,14 +74,16 @@ router.post("/register", (req, res) => {
  */
 router.post("/login", (req, res) => {
   let { user_name, password } = req.body;
-  Users.findBy(user_name)
+  Users.getUserData(user_name)
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = signToken(user);
         res.status(200).json({
           message: `${user.user_name} Logged In!`,
           token,
-          id: user.id
+          id: user.id,
+          ratings: user.ratings,
+          watchlist: user.watchlist,
         });
       } else {
         res.status(401).json({ message: "Failed to login" });
